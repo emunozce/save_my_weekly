@@ -1,8 +1,13 @@
-import Loader from "./components/Loader";
+// import Loader from "./components/Loader";
+import Navbar from "./components/Navbar";
+import { NextUIProvider } from "@nextui-org/react";
 
 function App() {
   return (
-    <Loader />
+    <NextUIProvider>
+      <Navbar />
+      {/* <Loader /> */}
+    </NextUIProvider>
   )
 }
 
