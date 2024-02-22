@@ -6,7 +6,6 @@ function App() {
   return (
     <NextUIProvider>
       <Navbar />
-      {/* <Loader /> */}
     </NextUIProvider>
   )
 }

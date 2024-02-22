@@ -2,8 +2,13 @@ import { Navbar, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/rea
 
 export default function NavbarComponent() {
     return (
-        <Navbar className="bg-black flex justify" shouldHideOnScroll>
-            <NavbarContent>
+        <Navbar className="bg-black flex" shouldHideOnScroll={true}>
+            <NavbarContent justify="start">
+                <NavbarItem>
+                    <Link className="text-green-500 font-semibold" href="#">
+                        Save My Weekly
+                    </Link>
+                </NavbarItem>
                 <NavbarItem>
                     <Link className="text-green-500 font-semibold" href="#">
                         Features
@@ -11,15 +16,10 @@ export default function NavbarComponent() {
                 </NavbarItem>
                 <NavbarItem>
                     <Link className="text-green-500 font-semibold" href="#">
-                        Customers
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Link className="text-green-500 font-semibold" href="#">
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarContent>
+            <NavbarContent justify="end">
                 <NavbarItem>
                     <Link className="text-green-500 font-semibold" href="#">Login</Link>
                 </NavbarItem>
