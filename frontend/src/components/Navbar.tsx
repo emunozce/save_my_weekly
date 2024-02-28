@@ -2,8 +2,8 @@ import { Navbar, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/rea
 
 export default function NavbarComponent() {
     return (
-        <Navbar className="bg-black flex" shouldHideOnScroll={true}>
-            <NavbarContent justify="start">
+        <Navbar className="bg-black flex" shouldHideOnScroll={true} maxWidth="full">
+            <NavbarContent>
                 <NavbarItem>
                     <Link className="text-green-500 font-semibold" href="#">
                         Save My Weekly
