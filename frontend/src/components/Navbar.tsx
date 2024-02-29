@@ -4,7 +4,7 @@ export default function NavbarComponent() {
         <Navbar className="bg-black flex" shouldHideOnScroll={true} maxWidth="full">
             <NavbarContent justify="center">
                 <NavbarItem className="md:pr-3">
-                    <Link className="text-green-500 font-semibold" href="/loader">
+                    <Link className="text-green-500 font-semibold" href="/">
                         Save My Weekly
                     </Link>
                 </NavbarItem >

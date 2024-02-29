@@ -1,7 +1,6 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Loader from "./components/Loader";
 import Sign_in_page from "./components/Sign_in_page";
 import Login_Page from "./components/Login_page";
 
@@ -14,7 +13,6 @@ function App() {
       < NextUIProvider navigate={navigate} >
         <Navbar />
         <Routes>
-          <Route path="/loader" element={<Loader />} />
           <Route path="/login" element={<Login_Page />} />
           <Route path="/signin" element={<Sign_in_page />} />
         </Routes>
