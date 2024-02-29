@@ -1,13 +1,18 @@
-// import Loader from "./components/Loader";
+import { NextUIProvider } from "@nextui-org/react";
+import { useNavigate, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
-import { NextUIProvider } from "@nextui-org/react";
 
 function App() {
+  const navigate = useNavigate();
+
   return (
-    <NextUIProvider>
+    <NextUIProvider navigate={navigate}>
       <Navbar />
-      <Loader />
+      <Routes>
+        <Route path="/loader" element={<Loader />} />
+        {/* <Route path="/signin" element={<HomePage />} /> */}
+      </Routes>
     </NextUIProvider>
   )
 }
