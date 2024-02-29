@@ -20,10 +20,10 @@ export default function NavbarComponent() {
             </NavbarContent >
             <NavbarContent justify="center">
                 <NavbarItem className="pr-3">
-                    <Link className="text-green-500 font-semibold" href="/"> Sign In</Link>
+                    <Link className="text-green-500 font-semibold" href="/signin"> Sign In</Link>
                 </NavbarItem>
                 <NavbarItem className="pl-3">
-                    <Button className="bg-green-500 font-semibold" as={Link} href="#" variant="solid"
+                    <Button className="bg-green-500 font-semibold" as={Link} href="login" variant="solid"
                     >
                         Login
                     </Button>
