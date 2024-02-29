@@ -2,21 +2,24 @@ import { NextUIProvider } from "@nextui-org/react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
-import Sign_In_Page from "./components/Sign_In_Page";
-import Log_In_Page from "./components/Log_In_Page";
+import Sign_in_page from "./components/Sign_in_page";
+import Login_Page from "./components/Login_page";
 
 function App() {
   const navigate = useNavigate();
 
   return (
-    <NextUIProvider navigate={navigate}>
-      <Navbar />
-      <Routes>
-        <Route path="/loader" element={<Loader />} />
-        <Route path="/login" element={<Log_In_Page />} />
-        <Route path="/signin" element={<Sign_In_Page />} />
-      </Routes>
-    </NextUIProvider>
+    <div className="bg-slate-600 h-screen">
+
+      < NextUIProvider navigate={navigate} >
+        <Navbar />
+        <Routes>
+          <Route path="/loader" element={<Loader />} />
+          <Route path="/login" element={<Login_Page />} />
+          <Route path="/signin" element={<Sign_in_page />} />
+        </Routes>
+      </NextUIProvider >
+    </div>
   )
 }
 
