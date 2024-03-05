@@ -1,8 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
-import { useState } from "react";
 
 export default function Sign_in_form() {
-    const [isDisabled, setDisabled] = useState<boolean>(false);
 
     return (
         <form action="" className="flex justify-center items-center">
@@ -52,7 +50,7 @@ export default function Sign_in_form() {
                             label="Confirm your Password"
                             labelPlacement="outside" />
                         <Spacer y={6}></Spacer>
-                        <Button isDisabled={isDisabled} className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
+                        <Button className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
                     </form>
                 </CardBody>
                 <CardFooter>
