@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function Sign_in_form() {
@@ -12,47 +12,47 @@ export default function Sign_in_form() {
                 </CardHeader>
                 <CardBody>
                     <form action="" className="flex flex-col justify-center">
-                        <div className="flex flex-row pb-1">
+                        <div className="flex flex-row">
                             <Input
-                                className="pr-1"
                                 isRequired={true}
                                 type="text"
                                 label="Name"
                                 labelPlacement="outside" />
+                            <Spacer x={2} />
                             <Input
-                                className="pl-1"
                                 isRequired={true}
                                 type="text"
                                 label="Lastname"
                                 labelPlacement="outside" />
                         </div>
-                        <div className="flex flex-row pt-2">
+                        <Spacer y={2}></Spacer>
+                        <div className="flex flex-row">
                             <Input
-                                className="pr-1"
                                 isRequired={true}
                                 type="text"
                                 label="Username"
                                 labelPlacement="outside" />
+                            <Spacer x={2} />
                             <Input
-                                className="pl-1"
                                 isRequired={true}
                                 type="email"
                                 label="Email"
                                 labelPlacement="outside" />
                         </div>
+                        <Spacer y={2}></Spacer>
                         <Input
-                            className="pt-2"
                             isRequired={true}
                             type="password"
                             label="Password"
                             labelPlacement="outside" />
+                        <Spacer y={2}></Spacer>
                         <Input
-                            className="pt-2"
                             isRequired={true}
                             type="password"
                             label="Confirm your Password"
                             labelPlacement="outside" />
-                        <Button isDisabled={isDisabled} className="self-center w-4/12 mt-7 bg-green-500 font-semibold">Sign In</Button>
+                        <Spacer y={6}></Spacer>
+                        <Button isDisabled={isDisabled} className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
                     </form>
                 </CardBody>
                 <CardFooter>

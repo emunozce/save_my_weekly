@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import { useState } from "react";
 
 export default function Login_form() {
@@ -13,18 +13,18 @@ export default function Login_form() {
                 <CardBody>
                     <form action="" className="flex flex-col justify-center items-center">
                         <Input
-                            className="pb-1"
                             isRequired={true}
                             type="email"
                             label="Email"
                             labelPlacement="outside" />
+                        <Spacer y={2}></Spacer>
                         <Input
-                            className="pt-2"
                             isRequired={true}
                             type="password"
                             label="Password"
                             labelPlacement="outside" />
-                        <Button isDisabled={isDisabled} className="w-4/12 mt-7 bg-green-500 font-semibold">Login</Button>
+                        <Spacer y={6}></Spacer>
+                        <Button isDisabled={isDisabled} className="w-4/12 bg-green-500 font-semibold">Login</Button>
                     </form>
                 </CardBody>
                 <CardFooter>
