@@ -1,7 +1,7 @@
 import { Navbar, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
 export default function NavbarComponent() {
     return (
-        <Navbar className="flex" shouldHideOnScroll={true} maxWidth="full">
+        <Navbar className="flex bg-zinc-700" shouldHideOnScroll={true} maxWidth="full">
             <NavbarContent justify="center">
                 <NavbarItem className="md:pr-3">
                     <Link className="text-green-500 font-semibold" href="/">

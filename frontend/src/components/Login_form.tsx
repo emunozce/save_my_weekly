@@ -19,7 +19,7 @@ export default function Login_form() {
 
     return (
         <>
-            <Spacer y={72} ></Spacer >
+            <Spacer y={40} ></Spacer >
             <div className="flex justify-center items-center">
                 <Card className="w-10/12 md:w-7/12 lg:w-5/12">
                     <CardHeader>
@@ -50,7 +50,7 @@ export default function Login_form() {
                     </CardFooter>
                 </Card>
             </div>
-            <Spacer y={72} ></Spacer>
+            <Spacer y={40} ></Spacer>
         </>
     )
 }
