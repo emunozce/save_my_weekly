@@ -7,14 +7,16 @@ interface Login_form {
 }
 
 export default function Login_form() {
-    const { register, handleSubmit } = useForm<Login_form>({
+    const { register, handleSubmit, formState: { errors } } = useForm<Login_form>({
         defaultValues: {
             email: "",
             password: ""
         }
     });
 
-    const onSubmit = handleSubmit(data => console.log(data))
+    const onSubmit = handleSubmit(data => {
+        console.log(data)
+    })
 
 
     return (
@@ -29,15 +31,17 @@ export default function Login_form() {
                         <form onSubmit={onSubmit}
                             className="flex flex-col justify-center items-center">
                             <Input
-                                {...register("email")}
-                                isRequired={true}
+                                {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email" } })}
+                                isInvalid={errors.email ? true : false}
+                                errorMessage={errors.email?.message}
                                 type="email"
                                 label="Email"
                                 labelPlacement="outside" />
                             <Spacer y={2}></Spacer>
                             <Input
-                                {...register("password")}
-                                isRequired={true}
+                                {...register("password", { required: "Password is required" })}
+                                isInvalid={errors.password ? true : false}
+                                errorMessage={errors.password?.message}
                                 type="password"
                                 label="Password"
                                 labelPlacement="outside" />
