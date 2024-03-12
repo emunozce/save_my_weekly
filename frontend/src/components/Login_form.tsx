@@ -30,13 +30,15 @@ export default function Login_form() {
                         <form onSubmit={onSubmit}
                             className="flex flex-col justify-center items-center">
                             <Input
-                                {...register("email", {
-                                    required: "Email is required",
-                                    pattern: {
-                                        value: /^\S+@\S+\.\S+$/,
-                                        message: "Invalid email"
+                                {...register("email",
+                                    {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^\S+@\S+\.\S+$/,
+                                            message: "Invalid email"
+                                        }
                                     }
-                                })}
+                                )}
                                 isInvalid={errors.email ? true : false}
                                 errorMessage={errors.email?.message}
                                 type="email"
@@ -44,13 +46,15 @@ export default function Login_form() {
                                 labelPlacement="outside" />
                             <Spacer y={2}></Spacer>
                             <Input
-                                {...register("password", {
-                                    required: "Password is required",
-                                    minLength: {
-                                        value: 8,
-                                        message: 'Password must be at least 8 characters long'
+                                {...register("password",
+                                    {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 8,
+                                            message: 'Password must be at least 8 characters long'
+                                        }
                                     }
-                                })}
+                                )}
                                 isInvalid={errors.password ? true : false}
                                 errorMessage={errors.password?.message}
                                 type="password"
