@@ -1,13 +1,13 @@
 import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 
-interface Login_form {
+interface LoginData {
     email: string;
     password: string;
 }
 
 export default function Login_form() {
-    const { register, handleSubmit, formState: { errors } } = useForm<Login_form>({
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginData>({
         defaultValues: {
             email: "",
             password: ""
@@ -17,7 +17,6 @@ export default function Login_form() {
     const onSubmit = handleSubmit(data => {
         console.log(data)
     })
-
 
     return (
         <>
@@ -31,7 +30,13 @@ export default function Login_form() {
                         <form onSubmit={onSubmit}
                             className="flex flex-col justify-center items-center">
                             <Input
-                                {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email" } })}
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /^\S+@\S+\.\S+$/,
+                                        message: "Invalid email"
+                                    }
+                                })}
                                 isInvalid={errors.email ? true : false}
                                 errorMessage={errors.email?.message}
                                 type="email"
@@ -39,7 +44,13 @@ export default function Login_form() {
                                 labelPlacement="outside" />
                             <Spacer y={2}></Spacer>
                             <Input
-                                {...register("password", { required: "Password is required" })}
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: 'Password must be at least 8 characters long'
+                                    }
+                                })}
                                 isInvalid={errors.password ? true : false}
                                 errorMessage={errors.password?.message}
                                 type="password"
