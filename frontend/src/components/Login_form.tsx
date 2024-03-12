@@ -27,8 +27,11 @@ export default function Login_form() {
                         <h4 className="text-3xl text-green-500 font-bold">Login</h4>
                     </CardHeader>
                     <CardBody>
-                        <form onSubmit={onSubmit}
-                            className="flex flex-col justify-center items-center">
+                        <form
+                            onSubmit={onSubmit}
+                            className="flex flex-col justify-center items-center"
+                            noValidate
+                        >
                             <Input
                                 {...register("email",
                                     {
@@ -49,9 +52,9 @@ export default function Login_form() {
                                 {...register("password",
                                     {
                                         required: "Password is required",
-                                        minLength: {
-                                            value: 8,
-                                            message: 'Password must be at least 8 characters long'
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                            message: 'Password must include uppercase, lowercase, number, and special character'
                                         }
                                     }
                                 )}

@@ -1,6 +1,29 @@
 import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
+import { useForm } from "react-hook-form";
+
+interface SignInData {
+    name: string;
+    lastname: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+}
 
 export default function Sign_in_form() {
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignInData>({
+        defaultValues: {
+            name: "",
+            lastname: "",
+            email: "",
+            password: "",
+            confirm_password: ""
+        }
+    });
+
+    const onSubmit = handleSubmit(data => {
+        console.log(data)
+    })
+
 
     return (
         <>
@@ -11,48 +34,104 @@ export default function Sign_in_form() {
                         <h4 className="text-3xl text-green-500 font-bold">Sign In</h4>
                     </CardHeader>
                     <CardBody>
-                        <form action="" className="flex flex-col justify-center">
+                        <form
+                            onSubmit={onSubmit}
+                            className="flex flex-col justify-center"
+                            noValidate
+                        >
                             <div className="flex flex-row">
                                 <Input
-                                    isRequired={true}
+                                    {...register("name",
+                                        {
+                                            required: "Name is required",
+                                            minLength: {
+                                                value: 2,
+                                                message: "Name should be more than 1 letter."
+                                            },
+                                            pattern: {
+                                                value: /^[a-zA-Z' ]+$/,
+                                                message: "Invalid name"
+                                            }
+                                        }
+                                    )}
+                                    isInvalid={errors.name ? true : false}
+                                    errorMessage={errors.name?.message}
                                     type="text"
                                     label="Name"
                                     labelPlacement="outside" />
                                 <Spacer x={2} />
                                 <Input
-                                    isRequired={true}
+                                    {...register("lastname",
+                                        {
+                                            required: "Lastname is required",
+                                            minLength: {
+                                                value: 2,
+                                                message: "Lastname should be more than 1 letter."
+                                            },
+                                            pattern: {
+                                                value: /^[a-zA-Z' ]+$/,
+                                                message: "Invalid lastname"
+                                            }
+                                        }
+                                    )}
+                                    isInvalid={errors.lastname ? true : false}
+                                    errorMessage={errors.lastname?.message}
                                     type="text"
                                     label="Lastname"
                                     labelPlacement="outside" />
                             </div>
                             <Spacer y={2}></Spacer>
-                            <div className="flex flex-row">
-                                <Input
-                                    isRequired={true}
-                                    type="text"
-                                    label="Username"
-                                    labelPlacement="outside" />
-                                <Spacer x={2} />
-                                <Input
-                                    isRequired={true}
-                                    type="email"
-                                    label="Email"
-                                    labelPlacement="outside" />
-                            </div>
+                            <Input
+                                {...register("email",
+                                    {
+                                        required: "Email is required",
+                                        pattern: {
+                                            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+                                            message: "Invalid email"
+                                        }
+                                    }
+                                )}
+                                isInvalid={errors.email ? true : false}
+                                errorMessage={errors.email?.message}
+                                type="email"
+                                label="Email"
+                                labelPlacement="outside" />
                             <Spacer y={2}></Spacer>
                             <Input
-                                isRequired={true}
+                                {...register("password",
+                                    {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 8,
+                                            message: 'Password must be at least 8 characters long'
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/,
+                                            message: 'Password must include uppercase, lowercase, number, and special character'
+                                        }
+                                    }
+                                )}
+                                isInvalid={errors.password ? true : false}
+                                errorMessage={errors.password?.message}
                                 type="password"
                                 label="Password"
                                 labelPlacement="outside" />
                             <Spacer y={2}></Spacer>
                             <Input
-                                isRequired={true}
+                                {...register(
+                                    "confirm_password",
+                                    {
+                                        required: "Password confirmation is required",
+                                        validate: (value) => value === getValues("password") || "The confirmation password does not match the password entered."
+                                    }
+                                )}
+                                isInvalid={errors.confirm_password ? true : false}
+                                errorMessage={errors.confirm_password?.message}
                                 type="password"
                                 label="Confirm your Password"
                                 labelPlacement="outside" />
                             <Spacer y={6}></Spacer>
-                            <Button className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
+                            <Button type="submit" className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
                         </form>
                     </CardBody>
                     <CardFooter>
