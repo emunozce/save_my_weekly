@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Sign_in_page from "./components/Sign_in_page";
 import Login_Page from "./components/Login_page";
 import Home_Page from "./components/Home_Page";
+import Footer from "./components/Footer";
 
 function App() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login_Page />} />
         <Route path="/signin" element={<Sign_in_page />} />
       </Routes>
+      <Footer />
     </NextUIProvider >
   )
 }
