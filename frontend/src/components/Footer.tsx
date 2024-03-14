@@ -1,7 +1,30 @@
+import { Link, Spacer } from "@nextui-org/react";
 
 export default function Footer() {
     return (
-        <div className="grid grid-cols-2 grid-rows-3 w-screen bg-green-500">
-        </div>
+        <div className="bg-green-500 grid grid-cols-2 grid-rows-2 w-screen absolute">
+            <div className="col-start-1 col-end-2 self-center justify-self-center flex flex-col items-center justify-center">
+                <h1 className="text-slate-800 font-extrabold text-xl">Features</h1>
+                <Spacer y={5}></Spacer>
+                <ul className="flex flex-col items-center justify-center">
+                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Save My Weekly</Link></li>
+                    <Spacer y={2}></Spacer>
+                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Top 10 artists in last month</Link></li>
+                    <Spacer y={2}></Spacer>
+                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Top 10 songs in last month</Link></li>
+                </ul>
+            </div>
+            <div className="col-start-2 col-end-3 self-center justify-self-center flex flex-col items-center justify-center">
+                <h1 className="text-slate-800 font-extrabold text-xl">About</h1>
+                <Spacer y={5}></Spacer>
+                <ul className="flex flex-col items-center justify-center">
+                    <Spacer y={2}></Spacer>
+                    <li><Link className="text-slate-900" font-semibold isBlock isExternal href="https://github.com/emunozce/Save_My_Weekly" showAnchorIcon>Github Repo</Link></li>
+                    <Spacer y={2}></Spacer>
+                    <li><Link className="text-slate-900" font-semibold isBlock isExternal href="https://open.spotify.com/" showAnchorIcon>Official Spotify Website</Link></li>
+                </ul>
+            </div>
+            <div className="text-slate-900 row-start-2 row-end-3 col-span-2 self-center justify-self-center">Save My Weekly ©2024 Made by emunozce</div>
+        </div >
     )
 }
