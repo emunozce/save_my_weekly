@@ -2,16 +2,14 @@ import { Link, Spacer } from "@nextui-org/react";
 
 export default function Footer() {
     return (
-        <div className="bg-green-500 grid grid-cols-2 grid-rows-2 w-screen absolute">
+        <div className="bg-green-500 grid sm:grid-cols-2 sm:grid-rows-2 grid-cols-1 grid-rows-3 w-screen">
             <div className="col-start-1 col-end-2 self-center justify-self-center flex flex-col items-center justify-center">
                 <h1 className="text-slate-800 font-extrabold text-xl">Features</h1>
                 <Spacer y={5}></Spacer>
                 <ul className="flex flex-col items-center justify-center">
                     <li><Link className="text-slate-900" font-semibold isBlock href="/">Save My Weekly</Link></li>
                     <Spacer y={2}></Spacer>
-                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Top 10 artists in last month</Link></li>
-                    <Spacer y={2}></Spacer>
-                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Top 10 songs in last month</Link></li>
+                    <li><Link className="text-slate-900" font-semibold isBlock href="/">Your Top 10</Link></li>
                 </ul>
             </div>
             <div className="col-start-2 col-end-3 self-center justify-self-center flex flex-col items-center justify-center">
