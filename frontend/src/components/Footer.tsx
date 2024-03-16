@@ -2,7 +2,7 @@ import { Link, Spacer } from "@nextui-org/react";
 
 export default function Footer() {
     return (
-        <div className="bg-green-500 grid sm:grid-cols-2 sm:grid-rows-2 grid-cols-1 grid-rows-3 w-screen">
+        <div className="bg-green-500 grid grid-cols-1 grid-rows-3 sm:grid-cols-2 sm:grid-rows-2 w-screen">
             <div className="col-start-1 col-end-2 self-center justify-self-center flex flex-col items-center justify-center">
                 <h1 className="text-slate-800 font-extrabold text-xl">Features</h1>
                 <Spacer y={5}></Spacer>
