@@ -11,11 +11,11 @@ class User(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
-    class Meta:  # Clase interna que define metadatos de la clase.
+    class Meta:  # Internal class that defines metadata for the model.
         verbose_name = "User"
         verbose_name_plural = "Users"
 
     def __str__(
         self,
-    ):  # Metodo magico que define como es que se van a mostrar los objetos de esta clase.
+    ):  # This method is called when the object is printed in the console or in the admin panel.
         return str(self.name)
