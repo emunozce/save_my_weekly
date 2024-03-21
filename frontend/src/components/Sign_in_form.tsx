@@ -13,7 +13,7 @@ interface SignInData {
 }
 
 export default function Sign_in_form() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignInData>({
         defaultValues: {
