@@ -47,9 +47,9 @@ export default function Sign_in_form() {
             setTimeout(() => {
                 setIsLoading(false);
             }, 2000);
+            window.location.href = "/login";
         } catch (error) {
             setIsLoading(false);
-            window.location.href = "/login";
         }
     });
 
