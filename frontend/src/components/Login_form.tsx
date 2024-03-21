@@ -20,7 +20,7 @@ export default function Login_form() {
 
     return (
         <>
-            <div className="flex justify-center items-center my-24 sm:my-32">
+            <div className="flex justify-center items-center my-32 sm:my-48 md:my-64">
                 <Card className="w-10/12 md:w-7/12 lg:w-5/12">
                     <CardHeader>
                         <h4 className="text-3xl text-green-500 font-bold">Login</h4>
