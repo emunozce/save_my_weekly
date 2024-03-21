@@ -1,12 +1,11 @@
 # Create your views here.
-import json
 import secrets
 import hashlib
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import User
+from api.models import User
 
 from .serializers import SignUpSerializer
 
@@ -36,14 +35,6 @@ class SignUp(APIView):
             "sha256", password.encode(), salt.encode(), iterations, dklen
         ).hex()
         return [hashed_password, salt]
-
-    def _check_password(self, password, hashed_password, salt):
-        iterations = 100000
-        dklen = 32
-        hashed_password_to_check = hashlib.pbkdf2_hmac(
-            "sha256", password.encode(), salt.encode(), iterations, dklen
-        ).hex()
-        return hashed_password == hashed_password_to_check
 
 
 class LogIn(APIView):
