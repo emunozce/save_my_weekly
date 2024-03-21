@@ -25,27 +25,32 @@ export default function Sign_in_form() {
         }
     });
 
-    const onSubmit = handleSubmit(async data => {
+    const onSubmit = handleSubmit(async (data) => {
         setIsLoading(true);
 
-        const jsonUserData = JSON.stringify({
-            name: data.name,
-            lastname: data.lastname,
-            email: data.email,
-            password: data.password
-        })
+        try {
+            const jsonUserData = JSON.stringify({
+                name: data.name,
+                lastname: data.lastname,
+                email: data.email,
+                password: data.password
+            });
 
-        axios.post('http://localhost:8000/api/signup/', jsonUserData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+            console.log(jsonUserData);
 
-        setTimeout(() => {
+            await axios.post('http://localhost:8000/api/signup/', jsonUserData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000);
+        } catch (error) {
             setIsLoading(false);
-        }, 2000)
-    })
-
+        }
+    });
 
     return (
         <>
