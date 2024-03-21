@@ -49,6 +49,7 @@ export default function Sign_in_form() {
             }, 2000);
         } catch (error) {
             setIsLoading(false);
+            window.location.href = "/login";
         }
     });
 
