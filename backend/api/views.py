@@ -7,7 +7,7 @@ from rest_framework import status
 
 from api.models import User
 
-from .serializers import SignUpSerializer
+from .serializers import LogInSerializer, SignUpSerializer
 
 
 class SignUp(APIView):
@@ -25,7 +25,10 @@ class SignUp(APIView):
                 {"message": "User signed up successfully"},
                 status=status.HTTP_201_CREATED,
             )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"message": "Email already in use, try to log in instead."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
     def _encrypt(self, password):
         salt = secrets.token_hex(16)
@@ -39,22 +42,31 @@ class SignUp(APIView):
 
 class LogIn(APIView):
     def get(self, request):
-        email = request.data.get("email")
-        password = request.data.get("password")
 
-        user = User.objects.filter(email=email).first()
+        serializer = LogInSerializer(data=request.data)
 
-        if user is None:
+        if serializer.is_valid():
+            email = request.data.get("email")
+            password = request.data.get("password")
+
+            user = User.objects.filter(email=email).first()
+
+            if user is None:
+                return Response(
+                    {"message": "User not found"}, status=status.HTTP_404_NOT_FOUND
+                )
+
+            if self._check_password(password, user.password, user.salt):
+                return Response(
+                    {"name": user.name, "lastname": user.lastname},
+                    status=status.HTTP_200_OK,
+                )
             return Response(
-                {"message": "User not found"}, status=status.HTTP_404_NOT_FOUND
-            )
-
-        if self._check_password(password, user.password, user.salt):
-            return Response(
-                {"message": "User logged in successfully"}, status=status.HTTP_200_OK
+                {"message": "Invalid password"}, status=status.HTTP_401_UNAUTHORIZED
             )
         return Response(
-            {"message": "Invalid password"}, status=status.HTTP_401_UNAUTHORIZED
+            {"message": "Error ocurred. Try again later."},
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
     def _check_password(self, password, hashed_password, salt):

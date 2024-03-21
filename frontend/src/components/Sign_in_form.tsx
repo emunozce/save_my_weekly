@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 interface SignInData {
     name: string;
@@ -12,8 +13,14 @@ interface SignInData {
     confirm_password: string;
 }
 
+interface ErrorData {
+    message: string;
+}
+
 export default function Sign_in_form() {
     const [isLoading, setIsLoading] = useState(false);
+    const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignInData>({
         defaultValues: {
@@ -26,30 +33,33 @@ export default function Sign_in_form() {
     });
 
     const onSubmit = handleSubmit(async (data) => {
-        setIsLoading(true);
+
+        const jsonUserData = {
+            name: data.name,
+            lastname: data.lastname,
+            email: data.email,
+            password: data.password
+        };
 
         try {
-            const jsonUserData = JSON.stringify({
-                name: data.name,
-                lastname: data.lastname,
-                email: data.email,
-                password: data.password
-            });
-
-            console.log(jsonUserData);
+            setIsLoading(true);
 
             await axios.post('http://localhost:8000/api/signup/', jsonUserData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-
             setTimeout(() => {
                 setIsLoading(false);
+                navigate('/login');
             }, 2000);
-            window.location.href = "/login";
         } catch (error) {
-            setIsLoading(false);
+            if (axios.isAxiosError(error)) {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 2000);
+                setIsInvalid(error?.response?.data);
+            }
         }
     });
 
@@ -63,6 +73,7 @@ export default function Sign_in_form() {
                             <h4 className="text-3xl text-green-500 font-bold">Sign In</h4>
                         </CardHeader>
                         <CardBody>
+                            {isInvalid && <p className="text-red-600">{isInvalid?.message}</p>}
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center"
