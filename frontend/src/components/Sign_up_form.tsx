@@ -67,7 +67,7 @@ export default function Sign_up_form() {
         <>
             <div className="flex justify-center items-center my-24 sm:my-30 md:my-40">
                 {isLoading ? (
-                    <div className="sm:mb-32">
+                    <div className="sm:mb-0 md:mb-32 lg:mb-0">
                         <Loader />
                     </div>
                 ) : (
