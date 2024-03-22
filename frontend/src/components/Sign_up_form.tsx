@@ -18,7 +18,7 @@ interface ErrorData {
 }
 
 export default function Sign_up_form() {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const navigate = useNavigate();
 
@@ -66,8 +66,11 @@ export default function Sign_up_form() {
     return (
         <>
             <div className="flex justify-center items-center my-24 sm:my-30 md:my-40">
-                {isLoading && <Loader />}
-                {!isLoading && (
+                {isLoading ? (
+                    <div className="sm:mb-32">
+                        <Loader />
+                    </div>
+                ) : (
                     <Card className="w-10/12 md:w-7/12 lg:w-5/12">
                         <CardHeader>
                             <h4 className="text-3xl text-green-500 font-bold">Sign Up</h4>
