@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
 
-interface SignInData {
+interface SignUpData {
     name: string;
     lastname: string;
     email: string;
@@ -17,12 +17,12 @@ interface ErrorData {
     message: string;
 }
 
-export default function Sign_in_form() {
+export default function Sign_up_form() {
     const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignInData>({
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<SignUpData>({
         defaultValues: {
             name: "",
             lastname: "",
@@ -70,7 +70,7 @@ export default function Sign_in_form() {
                 {!isLoading && (
                     <Card className="w-10/12 md:w-7/12 lg:w-5/12">
                         <CardHeader>
-                            <h4 className="text-3xl text-green-500 font-bold">Sign In</h4>
+                            <h4 className="text-3xl text-green-500 font-bold">Sign Up</h4>
                         </CardHeader>
                         <CardBody>
                             {isInvalid && <p className="text-red-600">{isInvalid?.message}</p>}
@@ -171,7 +171,7 @@ export default function Sign_in_form() {
                                     label="Confirm your Password"
                                     labelPlacement="outside" />
                                 <Spacer y={6}></Spacer>
-                                <Button type="submit" className="self-center w-4/12 bg-green-500 font-semibold">Sign In</Button>
+                                <Button type="submit" className="self-center w-4/12 bg-green-500 font-semibold">Sign Up</Button>
                             </form>
                         </CardBody>
                         <CardFooter>

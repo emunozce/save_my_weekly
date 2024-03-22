@@ -16,7 +16,7 @@ export default function NavbarComponent() {
             </NavbarContent>
             <NavbarContent justify="center">
                 <NavbarItem className="md:pr-3">
-                    <Link className="text-green-500 font-semibold hidden sm:block" isBlock href="/signin"> Sign In</Link>
+                    <Link className="text-green-500 font-semibold hidden sm:block" isBlock href="/signup"> Sign Up</Link>
                 </NavbarItem>
                 <NavbarItem className="md:pl-3">
                     <Button className="bg-green-500 font-semibold text-sm sm:text-base" as={Link} href="/login" variant="solid"
