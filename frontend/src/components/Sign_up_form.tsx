@@ -65,13 +65,13 @@ export default function Sign_up_form() {
 
     return (
         <>
-            <div className="flex justify-center items-center my-24 sm:my-30 md:my-40">
+            <div className="flex justify-center items-center">
                 {isLoading ? (
-                    <div className="sm:mb-0 md:mb-32 lg:mb-0">
+                    <div className="my-32 sm:mb-0 md:mt-60 md:mb-10 lg:mb-0">
                         <Loader />
                     </div>
                 ) : (
-                    <Card className="w-10/12 md:w-7/12 lg:w-5/12">
+                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-24 sm:mt-20 sm:mb-0 md:mt-40 md:mb-10">
                         <CardHeader>
                             <h4 className="text-3xl text-green-500 font-bold">Sign Up</h4>
                         </CardHeader>

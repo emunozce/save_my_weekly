@@ -15,7 +15,7 @@ interface ErrorData {
 }
 
 export default function Login_form() {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const navigate = useNavigate();
 
@@ -57,11 +57,11 @@ export default function Login_form() {
         <>
             <div className="flex justify-center items-center">
                 {isLoading ? (
-                    <div className="my-32 sm:mb-10 md:mt-60">
+                    <div className="my-32 sm:mb-0 md:mt-60 md:mb-10 lg:mb-0">
                         <Loader />
                     </div>
                 ) : (
-                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-32 md:mt-60 lg:my-32">
+                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-32 sm:mb-0 md:mt-60 md:mb-24 lg:mb-4">
                         <CardHeader>
                             <h4 className="text-3xl text-green-500 font-bold">Login</h4>
                         </CardHeader>
