@@ -41,7 +41,7 @@ class SignUp(APIView):
 
 
 class LogIn(APIView):
-    def get(self, request):
+    def post(self, request):
 
         serializer = LogInSerializer(data=request.data)
 
