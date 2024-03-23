@@ -15,7 +15,7 @@ interface ErrorData {
 }
 
 export default function Login_form() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const navigate = useNavigate();
 
