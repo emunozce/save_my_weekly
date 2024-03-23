@@ -48,7 +48,7 @@ export default function Login_form() {
                     setIsLoading(false);
                     navigate('/home');
                 }, 2000);
-                setIsInvalid(error.response?.data.detail);
+                setIsInvalid(error.response?.data);
             }
         }
     })
@@ -66,6 +66,7 @@ export default function Login_form() {
                             <h4 className="text-3xl text-green-500 font-bold">Login</h4>
                         </CardHeader>
                         <CardBody>
+                            {isInvalid && <p className="text-red-600">{isInvalid?.message}</p>}
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center items-center"
