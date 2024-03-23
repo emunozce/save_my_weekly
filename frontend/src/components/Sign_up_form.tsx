@@ -52,12 +52,12 @@ export default function Sign_up_form() {
             setTimeout(() => {
                 setIsLoading(false);
                 navigate('/login');
-            }, 2000);
+            }, 1000);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 2000);
+                }, 1000);
                 setIsInvalid(error?.response?.data);
             }
         }

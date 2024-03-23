@@ -41,13 +41,13 @@ export default function Login_form() {
             setTimeout(() => {
                 setIsLoading(false);
                 navigate('/home');
-            }, 2000);
+            }, 1000);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setTimeout(() => {
                     setIsLoading(false);
                     navigate('/home');
-                }, 2000);
+                }, 1000);
                 setIsInvalid(error.response?.data);
             }
         }
