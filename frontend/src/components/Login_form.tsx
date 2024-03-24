@@ -14,7 +14,7 @@ interface ErrorData {
     message: string;
 }
 
-export default function Login_form() {
+export default function Login_form({ handleLogin }: { handleLogin: (name: string, lastname: string) => void }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const navigate = useNavigate();
@@ -26,29 +26,30 @@ export default function Login_form() {
         }
     });
 
-    const onSubmit = handleSubmit(data => {
+    const onSubmit = handleSubmit(async (data) => {
+        setIsLoading(true);
         const jsonUserData = JSON.stringify({
             email: data.email,
             password: data.password
         })
 
         try {
-            axios.post('http://localhost:8000/api/login/', jsonUserData, {
+            const response = await axios.post('http://localhost:8000/api/login/', jsonUserData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             setTimeout(() => {
                 setIsLoading(false);
+                handleLogin(response.data.name, response.data.lastname) // Set user info
                 navigate('/home');
             }, 1000);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setTimeout(() => {
                     setIsLoading(false);
-                    navigate('/home');
                 }, 1000);
-                setIsInvalid(error.response?.data);
+                setIsInvalid(error?.response?.data);
             }
         }
     })

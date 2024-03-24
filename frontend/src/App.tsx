@@ -21,20 +21,20 @@ function App() {
     isLoggedIn: true
   });
 
-  const handleLoggedInfo = () => {
-    setStatus({ ...userInfo, isLoggedIn: false });
+  const handleLogout = () => {
+    setStatus({ ...userInfo, name: "", lastname: "", isLoggedIn: false }); // Delete user info
   }
 
-  const handleName = () => {
-    setStatus({ ...userInfo, name: "Emmanuel", lastname: "Munoz" });
+  const handleLogin = (name: string, lastname: string) => {
+    setStatus({ ...userInfo, name: name, lastname: lastname, isLoggedIn: true }); // Set user info
   }
 
   return (
     < NextUIProvider navigate={navigate} >
-      <Navbar userInfo={userInfo} handleLoggedinfo={handleLoggedInfo} />
+      <Navbar userInfo={userInfo} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home_Page />} />
-        <Route path="/login" element={<Login_Page />} />
+        <Route path="/login" element={<Login_Page handleLogin={handleLogin} />} />
         <Route path="/signup" element={<Sign_up_page />} />
       </Routes>
       <Footer />

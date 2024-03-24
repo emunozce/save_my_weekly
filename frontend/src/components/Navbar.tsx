@@ -1,7 +1,7 @@
 import { Navbar, NavbarContent, NavbarItem, Link, Button, Avatar, useDisclosure, Modal, ModalBody, ModalFooter, ModalContent, ModalHeader, Tooltip } from "@nextui-org/react";
 import { UserInfo } from "../App";
 
-export default function NavbarComponent({ userInfo: userInfo, handleLoggedinfo: handleLogout }: { userInfo: UserInfo, handleLoggedinfo: () => void }) {
+export default function NavbarComponent({ userInfo: userInfo, handleLogout: handleLogout }: { userInfo: UserInfo, handleLogout: () => void }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
@@ -21,16 +21,16 @@ export default function NavbarComponent({ userInfo: userInfo, handleLoggedinfo: 
             <NavbarContent justify="center">
                 {userInfo.isLoggedIn ? (
                     <>
-                        <NavbarItem className="md:pr-3 hidden sm:block">
-                            <Tooltip className="bg-green-500 text-black" placement="left" offset={15} content={userInfo.name + " " + userInfo.lastname}>
+                        <NavbarItem className="md:pr-3 sm:block">
+                            <Tooltip className="bg-green-500 text-black font-semibold" placement="left" offset={15} content={(userInfo.name + " " + userInfo.lastname).toUpperCase()}>
                                 <Avatar showFallback color={"success"} />
                             </Tooltip>
                         </NavbarItem>
                         <NavbarItem className="md:pl-3">
-                            <Button className="bg-green-500 font-semibold text-sm sm:text-base" onPress={onOpen} variant="solid">
+                            <Button className="bg-green-500 text-black font-semibold text-sm sm:text-base" onPress={onOpen} variant="solid">
                                 Logout
                             </Button>
-                            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} className="dark">
+                            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} className="dark" placement="center">
                                 <ModalContent>
                                     {(onClose) => (
                                         <>
@@ -71,7 +71,7 @@ export default function NavbarComponent({ userInfo: userInfo, handleLoggedinfo: 
                                 <Link className="text-green-500 font-semibold hidden sm:block" isBlock href="/signup"> Sign Up</Link>
                             </NavbarItem>
                             <NavbarItem className="md:pl-3">
-                                <Button className="bg-green-500 font-semibold text-sm sm:text-base" as={Link} href="/login" variant="solid"
+                                <Button className="bg-green-500 text-black font-semibold text-sm sm:text-base" as={Link} href="/login" variant="solid"
                                 >
                                     Login
                                 </Button>
