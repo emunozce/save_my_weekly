@@ -1,8 +1,10 @@
 import { Navbar, NavbarContent, NavbarItem, Link, Button, Avatar, useDisclosure, Modal, ModalBody, ModalFooter, ModalContent, ModalHeader, Tooltip } from "@nextui-org/react";
 import { UserInfo } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarComponent({ userInfo: userInfo, handleLogout: handleLogout }: { userInfo: UserInfo, handleLogout: () => void }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const navigate = useNavigate();
 
     return (
         <Navbar className="flex bg-zinc-700" shouldHideOnScroll={true} maxWidth="full">
@@ -45,6 +47,7 @@ export default function NavbarComponent({ userInfo: userInfo, handleLogout: hand
                                                     onPress={() => {
                                                         handleLogout();
                                                         onClose();
+                                                        navigate("/");
                                                     }}
                                                     color="danger"
                                                     variant="light"
