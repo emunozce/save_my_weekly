@@ -18,7 +18,7 @@ function App() {
   const [userInfo, setStatus] = useState<UserInfo>({
     name: "Emmanuel",
     lastname: "Munoz",
-    isLoggedIn: true
+    isLoggedIn: false
   });
 
   const handleLogout = () => {
