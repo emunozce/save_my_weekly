@@ -1,5 +1,7 @@
 import { Navbar, NavbarContent, NavbarItem, Link, Button, Avatar, useDisclosure, Modal, ModalBody, ModalFooter, ModalContent, ModalHeader, Tooltip } from "@nextui-org/react";
-export default function NavbarComponent({ isLoggedIn, handleLogout }: { isLoggedIn: boolean, handleLogout: () => void }) {
+import { UserInfo } from "../App";
+
+export default function NavbarComponent({ userInfo: userInfo, handleLoggedinfo: handleLogout }: { userInfo: UserInfo, handleLoggedinfo: () => void }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
@@ -17,16 +19,15 @@ export default function NavbarComponent({ isLoggedIn, handleLogout }: { isLogged
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="center">
-                {isLoggedIn ? (
+                {userInfo.isLoggedIn ? (
                     <>
                         <NavbarItem className="md:pr-3 hidden sm:block">
-                            <Tooltip className="bg-green-500 text-black" placement="left" offset={15} content="Name Lastname">
+                            <Tooltip className="bg-green-500 text-black" placement="left" offset={15} content={userInfo.name + " " + userInfo.lastname}>
                                 <Avatar showFallback color={"success"} />
                             </Tooltip>
                         </NavbarItem>
                         <NavbarItem className="md:pl-3">
-                            <Button className="bg-green-500 font-semibold text-sm sm:text-base" onPress={onOpen} variant="solid"
-                            >
+                            <Button className="bg-green-500 font-semibold text-sm sm:text-base" onPress={onOpen} variant="solid">
                                 Logout
                             </Button>
                             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} className="dark">
