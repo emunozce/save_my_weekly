@@ -42,7 +42,7 @@ export default function Login_form({ handleLogin }: { handleLogin: (name: string
             setTimeout(() => {
                 setIsLoading(false);
                 handleLogin(response.data.name, response.data.lastname) // Set user info
-                navigate('/home');
+                navigate('/');
             }, 1000);
         } catch (error) {
             if (axios.isAxiosError(error)) {
