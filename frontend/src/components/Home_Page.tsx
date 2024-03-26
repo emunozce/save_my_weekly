@@ -5,11 +5,11 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
     return (
         <>
             {userInfo.isLoggedIn ? (
-                <div className="grid grid-cols-1 grid-rows-3 place-items-center">
+                <div className="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 place-items-center">
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 border-none"
+                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 m-5 border-none h-[200px] sm:h-auto"
                     >
                         <Image
                             isZoomed
@@ -27,7 +27,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-2 border-none m-10 w-fit"
+                        className="col-start-1 row-start-2 md:col-start-2 md:row-start-1 border-none m-5 w-fit"
                     >
                         <Image
                             isZoomed
@@ -45,7 +45,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-3 border-none m-10 w-fit"
+                        className="col-start-1 row-start-3 md:col-span-2 md:row-start-2 border-none m-5 w-fit"
                     >
                         <Image
                             isZoomed
