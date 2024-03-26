@@ -14,11 +14,6 @@ export default function NavbarComponent({ userInfo: userInfo, handleLogout: hand
                         Save My Weekly
                     </Link>
                 </NavbarItem >
-                <NavbarItem className="md:pl-3">
-                    <Link className="text-green-500 font-semibold text-sm sm:text-base" isBlock href="/">
-                        Features
-                    </Link>
-                </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="center">
                 {userInfo.isLoggedIn ? (

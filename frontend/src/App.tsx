@@ -33,7 +33,7 @@ function App() {
     < NextUIProvider navigate={navigate} >
       <Navbar userInfo={userInfo} handleLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Home_Page />} />
+        <Route path="/" element={<Home_Page userInfo={userInfo} />} />
         <Route path="/login" element={<Login_Page handleLogin={handleLogin} />} />
         <Route path="/signup" element={<Sign_up_page />} />
       </Routes>
