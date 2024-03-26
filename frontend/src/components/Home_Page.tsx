@@ -9,12 +9,12 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 border-none m-10 w-fit h-[220px]"
+                        className="col-start-1 row-start-1 border-none"
                     >
                         <Image
                             isZoomed
                             alt="Discover Weekly..."
-                            className="object-scale-down"
+                            className="object-cover"
                             src="discover_weekly.png"
                         />
                         <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
@@ -63,7 +63,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                 </div >
             )
                 : (
-                    <div>Hola, logueate</div>
+                    <div className="flex justify-center item">Hola, logueate</div>
                 )}
         </>
     )
