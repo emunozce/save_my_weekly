@@ -16,8 +16,8 @@ export interface UserInfo {
 function App() {
   const navigate = useNavigate();
   const [userInfo, setStatus] = useState<UserInfo>({
-    name: "Emmanuel",
-    lastname: "Munoz",
+    name: "",
+    lastname: "",
     isLoggedIn: false
   });
 
