@@ -18,7 +18,7 @@ export default function NavbarComponent({ userInfo: userInfo, handleLogout: hand
             <NavbarContent justify="center">
                 {userInfo.isLoggedIn ? (
                     <>
-                        <NavbarItem className="md:pr-3 sm:block">
+                        <NavbarItem className="md:pr-3 hidden sm:block">
                             <Tooltip className="bg-green-500 text-black font-semibold" placement="left" offset={15} content={(userInfo.name + " " + userInfo.lastname).toUpperCase()}>
                                 <Avatar showFallback color={"success"} />
                             </Tooltip>

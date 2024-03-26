@@ -9,7 +9,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 m-5 border-none h-[200px] sm:h-auto"
+                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 border-none m-5 w-fit"
                     >
                         <Image
                             isZoomed
