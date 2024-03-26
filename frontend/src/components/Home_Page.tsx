@@ -15,7 +15,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                             isZoomed
                             alt="Discover Weekly..."
                             className="object-cover"
-                            src="discover_weekly.png"
+                            src="discover_weekly.jpg"
                         />
                         <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                             <p className="text-tiny text-white/80">Want to give your current Discover Weekly playlist another chance?</p>
@@ -63,7 +63,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                 </div >
             )
                 : (
-                    <div className="flex justify-center item">Hola, logueate</div>
+                    <div className="flex justify-center items-center">Hola, logueate</div>
                 )}
         </>
     )
