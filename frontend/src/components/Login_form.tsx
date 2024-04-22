@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import axios from "axios";
-import { useState } from "react";
+import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
+import Loader from "./Loader";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Loader from "./Loader";
+import { useState } from "react";
 
 interface LoginData {
     email: string;
@@ -34,7 +34,7 @@ export default function Login_form({ handleLogin }: { handleLogin: (name: string
         })
 
         try {
-            const response = await axios.post('http://localhost:8000/api/login/', jsonUserData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/login/`, jsonUserData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

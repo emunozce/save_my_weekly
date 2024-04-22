@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import axios from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
 import Loader from "./Loader";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface SignUpData {
     name: string;
@@ -44,7 +44,7 @@ export default function Sign_up_form() {
         try {
             setIsLoading(true);
 
-            await axios.post('http://localhost:8000/api/signup/', jsonUserData, {
+            await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/signup/`, jsonUserData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
