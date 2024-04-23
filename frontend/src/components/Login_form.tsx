@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Input, Link, Button, Spacer, Checkbox } from "@nextui-org/react";
 import Loader from "./Loader";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +14,10 @@ interface ErrorData {
     message: string;
 }
 
-export default function Login_form({ handleLogin }: { handleLogin: (name: string, lastname: string) => void }) {
+export default function Login_form({ handleLogin }: { handleLogin: (name: string, lastname: string, isRemembered: boolean) => void }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
+    const [isRememberLogInInfo, setRememberLogInInfo] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginData>({
@@ -40,8 +41,15 @@ export default function Login_form({ handleLogin }: { handleLogin: (name: string
                 }
             });
             setTimeout(() => {
+                if (isRememberLogInInfo) { // If selected, save to local storage
+                    localStorage.setItem('name', response.data.name);
+                    localStorage.setItem('lastname', response.data.lastname);
+                } else { // If not selected, save to session storage
+                    sessionStorage.setItem('name', response.data.name);
+                    sessionStorage.setItem('lastname', response.data.lastname);
+                }
                 setIsLoading(false);
-                handleLogin(response.data.name, response.data.lastname) // Set user info
+                handleLogin(response.data.name, response.data.lastname, isRememberLogInInfo) // Set user info
                 navigate('/');
             }, 1000);
         } catch (error) {
@@ -105,6 +113,11 @@ export default function Login_form({ handleLogin }: { handleLogin: (name: string
                                     label="Password"
                                     labelPlacement="outside" />
                                 <Spacer y={6}></Spacer>
+
+                                <Checkbox color="success" onValueChange={setRememberLogInInfo}>Remember Me</Checkbox>
+
+                                <Spacer y={6}></Spacer>
+
                                 <Button type="submit" className="w-4/12 bg-green-500 font-semibold">Login</Button>
                             </form>
                         </CardBody>

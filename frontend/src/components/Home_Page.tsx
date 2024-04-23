@@ -5,11 +5,11 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
     return (
         <>
             {userInfo.isLoggedIn ? (
-                <div className="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 place-items-center">
+                <div className="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 auto-cols-min">
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 border-none m-5 w-fit"
+                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 border-none mx-10 self-center place-self-center"
                     >
                         <Image
                             isZoomed
@@ -19,7 +19,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                         />
                         <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                             <p className="text-tiny text-white/80">Want to give your current Discover Weekly playlist another chance?</p>
-                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="sm">
+                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="md">
                                 Save Playlist
                             </Button>
                         </CardFooter>
@@ -27,7 +27,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-2 md:col-start-2 md:row-start-1 border-none m-5 w-fit"
+                        className="col-start-1 row-start-2 md:col-start-1 md:row-start-2 border-none m-10 self-center place-self-center"
                     >
                         <Image
                             isZoomed
@@ -37,7 +37,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                         />
                         <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                             <p className="text-tiny text-white/80">It doesn't get any better than this.</p>
-                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="sm">
+                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="md">
                                 See Top Artists
                             </Button>
                         </CardFooter>
@@ -45,7 +45,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-3 md:col-span-2 md:row-start-2 border-none m-5 w-fit"
+                        className="col-start-1 row-start-3 md:row-span-2 md:row-start-1 md:col-start-2 border-none mr-10 self-center place-self-center"
                     >
                         <Image
                             isZoomed
@@ -55,7 +55,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                         />
                         <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
                             <p className="text-tiny text-white/80">Find out which are the songs you can't get enough of. </p>
-                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="sm">
+                            <Button className=" text-black text-tiny font-semibold" color="success" radius="lg" size="md">
                                 See Top Songs
                             </Button>
                         </CardFooter>
