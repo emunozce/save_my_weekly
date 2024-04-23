@@ -5,11 +5,11 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
     return (
         <>
             {userInfo.isLoggedIn ? (
-                <div className="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 auto-cols-min">
+                <div className="grid grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 border-none mx-10 self-center place-self-center"
+                        className="col-start-1 row-start-1 lg:col-start-1 lg:row-start-1 border-none mb-0 mx-10 lg:mt-20 place-self-center"
                     >
                         <Image
                             isZoomed
@@ -27,7 +27,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-2 md:col-start-1 md:row-start-2 border-none m-10 self-center place-self-center"
+                        className="col-start-1 row-start-2 lg:col-start-1 lg:row-start-2 border-none mb-0 mx-10 lg:m-20 place-self-center"
                     >
                         <Image
                             isZoomed
@@ -45,7 +45,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-3 md:row-span-2 md:row-start-1 md:col-start-2 border-none mr-10 self-center place-self-center"
+                        className="col-start-1 row-start-3 lg:row-start-1 lg:col-start-2 lg:row-span-2 border-none my-10 mx-10 lg:mb-14 place-self-center"
                     >
                         <Image
                             isZoomed
