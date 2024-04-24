@@ -214,7 +214,7 @@ export default function Sign_up_form() {
                         </CardBody>
                         <CardFooter>
                             <p>
-                                Already have an account?{' '}
+                                Already have an account?
                                 <Link
                                     href="/login"
                                     className="text-green-500 font-semibold"
