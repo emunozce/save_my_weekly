@@ -122,7 +122,6 @@ export default function NavbarComponent({
                                 isBlock
                                 href="/signup"
                             >
-                                {' '}
                                 Sign Up
                             </Link>
                         </NavbarItem>
