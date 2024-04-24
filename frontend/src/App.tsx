@@ -1,11 +1,11 @@
-import { NextUIProvider } from "@nextui-org/react";
-import { useNavigate, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Sign_up_page from "./components/Sign_up_page";
-import Login_Page from "./components/Login_page";
-import Home_Page from "./components/Home_Page";
-import Footer from "./components/Footer";
-import { useState } from "react";
+import { NextUIProvider } from '@nextui-org/react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Sign_up_page from './components/Sign_up_page';
+import Login_Page from './components/Login_page';
+import Home_Page from './components/Home_Page';
+import Footer from './components/Footer';
+import { useState } from 'react';
 
 export interface UserInfo {
     name: string;
@@ -17,8 +17,8 @@ export interface UserInfo {
 function App() {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState<UserInfo>({
-        name: "",
-        lastname: "",
+        name: '',
+        lastname: '',
         isLoggedIn: false,
         isRemembered: false,
     });
@@ -27,8 +27,8 @@ function App() {
         userInfo.isRemembered ? localStorage.clear() : sessionStorage.clear(); // Clear storage if user is remembered
         setUserInfo({
             ...userInfo,
-            name: "",
-            lastname: "",
+            name: '',
+            lastname: '',
             isLoggedIn: false,
             isRemembered: false,
         }); // Delete user info
@@ -52,8 +52,8 @@ function App() {
         if (localStorage.length > 0 && !userInfo.isLoggedIn) {
             setUserInfo({
                 ...userInfo,
-                name: localStorage.getItem("name")!,
-                lastname: localStorage.getItem("lastname")!,
+                name: localStorage.getItem('name')!,
+                lastname: localStorage.getItem('lastname')!,
                 isLoggedIn: true,
                 isRemembered: true,
             }); // Set user info
@@ -61,8 +61,8 @@ function App() {
         } else if (sessionStorage.length > 0 && !userInfo.isLoggedIn) {
             setUserInfo({
                 ...userInfo,
-                name: sessionStorage.getItem("name")!,
-                lastname: sessionStorage.getItem("lastname")!,
+                name: sessionStorage.getItem('name')!,
+                lastname: sessionStorage.getItem('lastname')!,
                 isLoggedIn: true,
                 isRemembered: false,
             }); // Set user info
@@ -75,23 +75,14 @@ function App() {
 
     return (
         <NextUIProvider navigate={navigate}>
-            <Navbar
-                userInfo={userInfo}
-                handleLogout={handleLogout}
-            />
+            <Navbar userInfo={userInfo} handleLogout={handleLogout} />
             <Routes>
-                <Route
-                    path="/"
-                    element={<Home_Page userInfo={userInfo} />}
-                />
+                <Route path="/" element={<Home_Page userInfo={userInfo} />} />
                 <Route
                     path="/login"
                     element={<Login_Page handleLogin={handleLogin} />}
                 />
-                <Route
-                    path="/signup"
-                    element={<Sign_up_page />}
-                />
+                <Route path="/signup" element={<Sign_up_page />} />
             </Routes>
             <Footer />
         </NextUIProvider>

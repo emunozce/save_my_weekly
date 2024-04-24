@@ -1,48 +1,100 @@
-import { Navbar, NavbarContent, NavbarItem, Link, Button, Avatar, useDisclosure, Modal, ModalBody, ModalFooter, ModalContent, ModalHeader, Tooltip } from "@nextui-org/react";
-import { UserInfo } from "../App";
-import { useNavigate } from "react-router-dom";
+import {
+    Navbar,
+    NavbarContent,
+    NavbarItem,
+    Link,
+    Button,
+    Avatar,
+    useDisclosure,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalContent,
+    ModalHeader,
+    Tooltip,
+} from '@nextui-org/react';
+import { UserInfo } from '../App';
+import { useNavigate } from 'react-router-dom';
 
-export default function NavbarComponent({ userInfo: userInfo, handleLogout: handleLogout }: { userInfo: UserInfo, handleLogout: () => void }) {
+export default function NavbarComponent({
+    userInfo: userInfo,
+    handleLogout: handleLogout,
+}: {
+    userInfo: UserInfo;
+    handleLogout: () => void;
+}) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const navigate = useNavigate();
 
     return (
-        <Navbar className="flex bg-zinc-700" shouldHideOnScroll={true} maxWidth="full">
+        <Navbar
+            className="flex bg-zinc-700"
+            shouldHideOnScroll={true}
+            maxWidth="full"
+        >
             <NavbarContent justify="center">
                 <NavbarItem className="md:pr-3">
-                    <Link className="text-green-500 font-semibold text-sm sm:text-base" isBlock href="/">
+                    <Link
+                        className="text-green-500 font-semibold text-sm sm:text-base"
+                        isBlock
+                        href="/"
+                    >
                         Save My Weekly
                     </Link>
-                </NavbarItem >
+                </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="center">
                 {userInfo.isLoggedIn ? (
                     <>
                         <NavbarItem className="md:pr-3 hidden sm:block">
-                            <Tooltip className="bg-green-500 text-black font-semibold" placement="left" offset={15} content={(userInfo.name + " " + userInfo.lastname).toUpperCase()}>
-                                <Avatar showFallback color={"success"} />
+                            <Tooltip
+                                className="bg-green-500 text-black font-semibold"
+                                placement="left"
+                                offset={15}
+                                content={(
+                                    userInfo.name +
+                                    ' ' +
+                                    userInfo.lastname
+                                ).toUpperCase()}
+                            >
+                                <Avatar showFallback color={'success'} />
                             </Tooltip>
                         </NavbarItem>
                         <NavbarItem className="md:pl-3">
-                            <Button className="bg-green-500 text-black font-semibold text-sm sm:text-base" onPress={onOpen} variant="solid">
+                            <Button
+                                className="bg-green-500 text-black font-semibold text-sm sm:text-base"
+                                onPress={onOpen}
+                                variant="solid"
+                            >
                                 Logout
                             </Button>
-                            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} className="dark" placement="center">
+                            <Modal
+                                backdrop="blur"
+                                isOpen={isOpen}
+                                onOpenChange={onOpenChange}
+                                className="dark"
+                                placement="center"
+                            >
                                 <ModalContent>
                                     {(onClose) => (
                                         <>
                                             <ModalHeader>
-                                                <h3 className="text-red-700">Logout</h3>
+                                                <h3 className="text-red-700">
+                                                    Logout
+                                                </h3>
                                             </ModalHeader>
                                             <ModalBody>
-                                                <p className="text-white">Are you sure you want to log out?</p>
+                                                <p className="text-white">
+                                                    Are you sure you want to log
+                                                    out?
+                                                </p>
                                             </ModalBody>
                                             <ModalFooter>
                                                 <Button
                                                     onPress={() => {
                                                         handleLogout();
                                                         onClose();
-                                                        navigate("/");
+                                                        navigate('/');
                                                     }}
                                                     color="danger"
                                                     variant="light"
@@ -59,24 +111,34 @@ export default function NavbarComponent({ userInfo: userInfo, handleLogout: hand
                                         </>
                                     )}
                                 </ModalContent>
-
                             </Modal>
                         </NavbarItem>
-                    </>)
-                    : (
-                        <>
-                            <NavbarItem className="md:pr-3">
-                                <Link className="text-green-500 font-semibold hidden sm:block" isBlock href="/signup"> Sign Up</Link>
-                            </NavbarItem>
-                            <NavbarItem className="md:pl-3">
-                                <Button className="bg-green-500 text-black font-semibold text-sm sm:text-base" as={Link} href="/login" variant="solid"
-                                >
-                                    Login
-                                </Button>
-                            </NavbarItem>
-                        </>
-                    )}
+                    </>
+                ) : (
+                    <>
+                        <NavbarItem className="md:pr-3">
+                            <Link
+                                className="text-green-500 font-semibold hidden sm:block"
+                                isBlock
+                                href="/signup"
+                            >
+                                {' '}
+                                Sign Up
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="md:pl-3">
+                            <Button
+                                className="bg-green-500 text-black font-semibold text-sm sm:text-base"
+                                as={Link}
+                                href="/login"
+                                variant="solid"
+                            >
+                                Login
+                            </Button>
+                        </NavbarItem>
+                    </>
+                )}
             </NavbarContent>
-        </Navbar >
+        </Navbar>
     );
 }

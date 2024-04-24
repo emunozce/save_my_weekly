@@ -1,5 +1,5 @@
-import { Button, Card, CardFooter, Image } from "@nextui-org/react";
-import { UserInfo } from "../App";
+import { Button, Card, CardFooter, Image } from '@nextui-org/react';
+import { UserInfo } from '../App';
 
 export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
     return (
