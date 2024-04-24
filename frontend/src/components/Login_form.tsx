@@ -171,7 +171,7 @@ export default function Login_form({
                         </CardBody>
                         <CardFooter>
                             <p>
-                                Don't have an account?{' '}
+                                Don't have an account?
                                 <Link
                                     href="/signup"
                                     className="text-green-500 font-semibold"
