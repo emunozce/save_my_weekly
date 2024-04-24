@@ -9,7 +9,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-1 lg:col-start-1 lg:row-start-1 border-none mb-0 mx-10 lg:mt-20 place-self-center"
+                        className="col-start-1 row-start-1 lg:col-start-1 lg:row-start-1 border-none mx-10 lg:mt-20 place-self-center"
                     >
                         <Image
                             isZoomed
@@ -35,7 +35,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-2 lg:col-start-1 lg:row-start-2 border-none mb-0 mx-10 lg:m-20 place-self-center"
+                        className="col-start-1 row-start-2 lg:col-start-1 lg:row-start-2 border-none mx-10 lg:m-12 place-self-center"
                     >
                         <Image
                             isZoomed
@@ -60,7 +60,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                     <Card
                         isFooterBlurred
                         radius="lg"
-                        className="col-start-1 row-start-3 lg:row-start-1 lg:col-start-2 lg:row-span-2 border-none my-10 mx-10 lg:mb-14 place-self-center"
+                        className="col-start-1 row-start-3 lg:row-start-1 lg:col-start-2 lg:row-span-2 border-none my-10 mx-10 md:my-20 lg:mb-14 place-self-center"
                     >
                         <Image
                             isZoomed
