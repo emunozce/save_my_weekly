@@ -37,7 +37,7 @@ export default function NavbarComponent({
                     <Link
                         className="text-green-500 font-semibold text-sm sm:text-base"
                         isBlock
-                        href="/"
+                        onPress={() => navigate('/')}
                     >
                         Save My Weekly
                     </Link>
@@ -120,7 +120,7 @@ export default function NavbarComponent({
                             <Link
                                 className="text-green-500 font-semibold hidden sm:block"
                                 isBlock
-                                href="/signup"
+                                onPress={() => navigate('/signup')}
                             >
                                 Sign Up
                             </Link>
@@ -128,8 +128,7 @@ export default function NavbarComponent({
                         <NavbarItem className="md:pl-3">
                             <Button
                                 className="bg-green-500 text-black font-semibold text-sm sm:text-base"
-                                as={Link}
-                                href="/login"
+                                onPress={() => navigate('/login')}
                                 variant="solid"
                             >
                                 Login

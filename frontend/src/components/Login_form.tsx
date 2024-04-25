@@ -12,7 +12,6 @@ import {
 } from '@nextui-org/react';
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 interface LoginData {
@@ -37,8 +36,6 @@ export default function Login_form({
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const [isRememberLogInInfo, setRememberLogInInfo] =
         useState<boolean>(false);
-    const navigate = useNavigate();
-
     const {
         register,
         handleSubmit,
@@ -67,24 +64,28 @@ export default function Login_form({
                     },
                 }
             );
-            setTimeout(() => {
-                if (isRememberLogInInfo) {
-                    // If selected, save to local storage
-                    localStorage.setItem('name', response.data.name);
-                    localStorage.setItem('lastname', response.data.lastname);
-                } else {
-                    // If not selected, save to session storage
-                    sessionStorage.setItem('name', response.data.name);
-                    sessionStorage.setItem('lastname', response.data.lastname);
-                }
-                setIsLoading(false);
-                handleLogin(
-                    response.data.name,
-                    response.data.lastname,
-                    isRememberLogInInfo
-                ); // Set user info
-                navigate('/');
-            }, 1000);
+            if (isRememberLogInInfo) {
+                // If selected, save to local storage
+                localStorage.setItem('name', response.data.name);
+                localStorage.setItem('lastname', response.data.lastname);
+            } else {
+                // If not selected, save to session storage
+                sessionStorage.setItem('name', response.data.name);
+                sessionStorage.setItem('lastname', response.data.lastname);
+            }
+
+            handleLogin(
+                response.data.name,
+                response.data.lastname,
+                isRememberLogInInfo
+            ); // Set user info
+
+            const redirect_url = await axios.get(
+                `${import.meta.env.VITE_API_ENDPOINT}/auth_token_spotify/`
+            );
+
+            setIsLoading(false);
+            window.location.href = redirect_url.data.url;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setTimeout(() => {
