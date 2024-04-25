@@ -1,13 +1,16 @@
 # Create your views here.
+import os
 import secrets
 import hashlib
+import urllib.parse
+from dotenv import load_dotenv
+from api.models import User
+from .serializers import LogInSerializer, SignUpSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from api.models import User
-
-from .serializers import LogInSerializer, SignUpSerializer
+load_dotenv()
 
 
 class SignUp(APIView):
@@ -84,3 +87,31 @@ class LogIn(APIView):
         return (
             hashed_password == hashed_password_to_check
         )  # Return True if password is correct, False otherwise
+
+
+class User_auth_spotify(APIView):
+    def get(self, request):
+
+        state = secrets.token_hex(16)
+        scope = "playlist-read-private, playlist-modify-public, playlist-modify-private, user-top-read"
+        # Construct query parameters
+        query_params = {
+            "response_type": "code",
+            "client_id": os.getenv("CLIENT_ID"),
+            "scope": scope,
+            "redirect_uri": os.getenv("REDIRECT_URI"),
+            "state": state,
+        }
+
+        # Construct redirect URL with query parameters
+        redirect_url = (
+            "https://accounts.spotify.com/authorize?"
+            + urllib.parse.urlencode(query_params)
+        )
+
+        # Perform the redirect
+        # return Response("Ok")
+        return Response(
+            {"url": redirect_url},
+            status=status.HTTP_200_OK,
+        )
