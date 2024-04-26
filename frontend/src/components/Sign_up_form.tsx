@@ -184,7 +184,6 @@ export default function Sign_up_form() {
                                     type="password"
                                     label="Password"
                                     labelPlacement="outside"
-                                    isClearable
                                 />
                                 <Spacer y={2}></Spacer>
                                 <Input
