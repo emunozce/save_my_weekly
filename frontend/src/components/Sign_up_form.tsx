@@ -100,6 +100,7 @@ export default function Sign_up_form() {
                                     {isInvalid?.message}
                                 </p>
                             )}
+                            <Spacer y={3} />
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center"
@@ -213,15 +214,14 @@ export default function Sign_up_form() {
                             </form>
                         </CardBody>
                         <CardFooter>
-                            <p>
-                                Already have an account?
-                                <Link
-                                    href="/login"
-                                    className="text-green-500 font-semibold"
-                                >
-                                    Login
-                                </Link>
-                            </p>
+                            <p>Already have an account?</p>
+                            <Spacer x={2} />
+                            <Link
+                                onPress={() => navigate('/login')}
+                                className="text-green-500 font-semibold"
+                            >
+                                Login
+                            </Link>
                         </CardFooter>
                     </Card>
                 )}

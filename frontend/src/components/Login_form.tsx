@@ -13,6 +13,7 @@ import {
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginData {
     email: string;
@@ -46,6 +47,7 @@ export default function Login_form({
             password: '',
         },
     });
+    const navigate = useNavigate();
 
     const onSubmit = handleSubmit(async (data) => {
         setIsLoading(true);
@@ -116,6 +118,7 @@ export default function Login_form({
                                     {isInvalid?.message}
                                 </p>
                             )}
+                            <Spacer y={3} />
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center items-center"
@@ -171,15 +174,14 @@ export default function Login_form({
                             </form>
                         </CardBody>
                         <CardFooter>
-                            <p>
-                                Don't have an account?
-                                <Link
-                                    href="/signup"
-                                    className="text-green-500 font-semibold"
-                                >
-                                    Sign Up
-                                </Link>
-                            </p>
+                            <p>Don't have an account?</p>
+                            <Spacer x={2} />
+                            <Link
+                                onPress={() => navigate('/signup')}
+                                className="text-green-500 font-semibold"
+                            >
+                                Sign Up
+                            </Link>
                         </CardFooter>
                     </Card>
                 )}
