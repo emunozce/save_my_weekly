@@ -90,7 +90,7 @@ export default function Sign_up_form() {
                 ) : (
                     <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-24 sm:mt-20 sm:mb-0 md:mt-40 md:mb-10">
                         <CardHeader>
-                            <h4 className="text-3xl text-green-500 font-bold">
+                            <h4 className="text-3xl text-green-500 font-bold hover:cursor-default">
                                 Sign Up
                             </h4>
                         </CardHeader>
@@ -100,6 +100,7 @@ export default function Sign_up_form() {
                                     {isInvalid?.message}
                                 </p>
                             )}
+                            <Spacer y={3} />
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center"
@@ -213,15 +214,16 @@ export default function Sign_up_form() {
                             </form>
                         </CardBody>
                         <CardFooter>
-                            <p>
+                            <p className="hover:cursor-default">
                                 Already have an account?
-                                <Link
-                                    href="/login"
-                                    className="text-green-500 font-semibold"
-                                >
-                                    Login
-                                </Link>
                             </p>
+                            <Spacer x={2} />
+                            <Link
+                                onPress={() => navigate('/login')}
+                                className="text-green-500 font-semibold hover:cursor-pointer"
+                            >
+                                Login
+                            </Link>
                         </CardFooter>
                     </Card>
                 )}
