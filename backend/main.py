@@ -1,22 +1,13 @@
 """FastAPI application entry point."""
 
-from datetime import date
 from fastapi import FastAPI
-from db.user import User, insert_user
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-user = User(
-    name="John",
-    lastname="Doe",
-    email="emunozce80@gmail.com",
-    date_created=date.today(),
-    password="123456",
-    salt="32432432423",
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-
-
-@app.get("/lol")
-async def root():
-    insert_user(user)
-    return {"message": "Hello World"}
