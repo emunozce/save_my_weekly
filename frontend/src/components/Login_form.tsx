@@ -13,6 +13,7 @@ import {
 import Loader from './Loader';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginData {
     email: string;
@@ -46,6 +47,7 @@ export default function Login_form({
             password: '',
         },
     });
+    const navigate = useNavigate();
 
     const onSubmit = handleSubmit(async (data) => {
         setIsLoading(true);
@@ -106,7 +108,7 @@ export default function Login_form({
                 ) : (
                     <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-32 sm:mb-0 md:mt-60 md:mb-24 lg:mb-4">
                         <CardHeader>
-                            <h4 className="text-3xl text-green-500 font-bold">
+                            <h4 className="text-3xl text-green-500 font-bold hover:cursor-default">
                                 Login
                             </h4>
                         </CardHeader>
@@ -116,6 +118,7 @@ export default function Login_form({
                                     {isInvalid?.message}
                                 </p>
                             )}
+                            <Spacer y={3} />
                             <form
                                 onSubmit={onSubmit}
                                 className="flex flex-col justify-center items-center"
@@ -171,15 +174,16 @@ export default function Login_form({
                             </form>
                         </CardBody>
                         <CardFooter>
-                            <p>
+                            <p className="hover:cursor-default">
                                 Don't have an account?
-                                <Link
-                                    href="/signup"
-                                    className="text-green-500 font-semibold"
-                                >
-                                    Sign Up
-                                </Link>
                             </p>
+                            <Spacer x={2} />
+                            <Link
+                                onPress={() => navigate('/signup')}
+                                className="text-green-500 font-semibold hover:cursor-pointer"
+                            >
+                                Sign Up
+                            </Link>
                         </CardFooter>
                     </Card>
                 )}
