@@ -1,19 +1,8 @@
 """Table USer setup file."""
 
-from datetime import date
-from sqlmodel import Field, SQLModel, Session
-from db.database_setup import engine
-
-
-class User(SQLModel, table=True):
-    """Users table model."""
-
-    name: str
-    lastname: str = Field(default=None)
-    email: str | None = Field(default=None, primary_key=True)
-    password: str
-    salt: str
-    date_created: date
+from sqlmodel import SQLModel, Session
+from db.models import User
+from db.database import engine
 
 
 def create_db_and_tables():
