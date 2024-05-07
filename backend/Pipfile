@@ -7,6 +7,8 @@ name = "pypi"
 fastapi = {extras = ["all"], version = "*"}
 sqlmodel = "*"
 python-dotenv = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
+passlib = {extras = ["bcrypt"], version = "*"}
 
 [dev-packages]
 
