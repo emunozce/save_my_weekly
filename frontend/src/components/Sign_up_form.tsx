@@ -58,7 +58,7 @@ export default function Sign_up_form() {
             setIsLoading(true);
 
             await axios.post(
-                `${import.meta.env.VITE_API_ENDPOINT}/signup/`,
+                `${import.meta.env.VITE_API_ENDPOINT}/signup`,
                 jsonUserData,
                 {
                     headers: {

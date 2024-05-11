@@ -5,6 +5,9 @@ from sqlmodel import Field, SQLModel
 from db.database_configs import engine
 
 
+############################## User Models ##########################################
+
+
 class UserBase(SQLModel):
     """Base User model."""
 
@@ -20,17 +23,25 @@ class User(UserBase, table=True):
     date_created: datetime = Field(nullable=False)
 
 
-class UserCreate(UserBase):
+class UserSignUpRequest(UserBase):
     """User model. Used to create a user."""
 
     email: str
     password: str
 
 
-class UserResponse(UserBase):
-    """User model. Used to return a user."""
+class UserLoginRequest(SQLModel):
+    """User model. Used to login a user."""
 
     email: str
+    password: str
+
+
+class UserLoginResponse(UserBase):
+    """User model. Used to return a user."""
+
+
+##########################################################################
 
 
 def create_db_and_tables():

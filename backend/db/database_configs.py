@@ -6,4 +6,4 @@ from sqlmodel import create_engine
 
 load_dotenv()
 
-engine = create_engine(os.getenv("SQLITE_URL"), echo=True)
+engine = create_engine(os.getenv("SQLITE_URL"))

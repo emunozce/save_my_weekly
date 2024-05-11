@@ -58,7 +58,7 @@ export default function Login_form({
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_API_ENDPOINT}/login/`,
+                `${import.meta.env.VITE_API_ENDPOINT}/login`,
                 jsonUserData,
                 {
                     headers: {
@@ -82,12 +82,8 @@ export default function Login_form({
                 isRememberLogInInfo
             ); // Set user info
 
-            const redirect_url = await axios.get(
-                `${import.meta.env.VITE_API_ENDPOINT}/auth_token_spotify/`
-            );
-
             setIsLoading(false);
-            window.location.href = redirect_url.data.url;
+            window.location.href = '/'; // Redirect to home page
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setTimeout(() => {
