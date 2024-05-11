@@ -1,13 +1,8 @@
 """Table USer setup file."""
 
-from sqlmodel import SQLModel, Session
+from sqlmodel import Session
 from db.models import User
-from db.database import engine
-
-
-def create_db_and_tables():
-    """Create database and tables."""
-    SQLModel.metadata.create_all(engine)
+from db.database_configs import engine
 
 
 def insert_user(user: User):
@@ -22,7 +17,3 @@ def get_user_by_email(email: str):
     with Session(engine) as session:
         user = session.get(User, email)
     return user
-
-
-if __name__ == "__main__":
-    create_db_and_tables()
