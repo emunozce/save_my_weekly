@@ -42,7 +42,7 @@ async def login(user_request: UserLoginRequest) -> UserLoginResponse:
 async def signup(user: UserSignUpRequest) -> JSONResponse:
     """Sign up a user."""
 
-    if get_user_by_email(user.email):
+    if get_user_by_email(user.email) == None:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
             content={"message": "Email already in use, try to log in instead."},
@@ -58,7 +58,7 @@ async def signup(user: UserSignUpRequest) -> JSONResponse:
         date_created=datetime.now(),
     )
 
-    insert_user(user)
+    await insert_user(user)
     return JSONResponse(
         status_code=status.HTTP_201_CREATED, content={"message": "User created."}
     )
