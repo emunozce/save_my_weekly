@@ -23,6 +23,10 @@ function App() {
         shouldRemember: false,
     });
 
+    /**
+     * The handleLogout function clears the localStorage or sessionStorage based on the shouldRemember
+     * flag and resets the user information.
+     */
     const handleLogout = () => {
         userInfo.shouldRemember ? localStorage.clear() : sessionStorage.clear(); // Clear storage wether it is local or session
         setUserInfo({
@@ -34,6 +38,17 @@ function App() {
         }); // Delete user info
     };
 
+    /**
+     * The `handleLogin` function in TypeScript React sets user information including name, lastname,
+     * login status, and remember preference.
+     * @param {string} name - The `name` parameter is a string representing the user's first name.
+     * @param {string} lastname - The `lastname` parameter in the `handleLogin` function represents the
+     * last name of the user who is logging in. It is a string type parameter that should contain the
+     * last name of the user.
+     * @param {boolean} isRemembered - The `isRemembered` parameter in the `handleLogin` function is a
+     * boolean value that indicates whether the user wants to be remembered or not. If `isRemembered`
+     * is `true`, it means the user has chosen to be remembered for future logins, and if it is `false
+     */
     const handleLogin = (
         name: string,
         lastname: string,
@@ -48,6 +63,12 @@ function App() {
         }); // Set user info
     };
 
+    /**
+     * The function `isRemembered` checks if there is stored user information in localStorage or
+     * sessionStorage and updates the user info accordingly.
+     * @returns The `isRemembered` function returns nothing (`undefined`) if none of the conditions
+     * inside the function are met.
+     */
     const isRemembered = () => {
         if (localStorage.length > 0 && !userInfo.isLoggedIn) {
             setUserInfo({
