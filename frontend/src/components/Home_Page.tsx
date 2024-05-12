@@ -39,6 +39,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                                 color="success"
                                 radius="lg"
                                 size="md"
+                                onPress={() => navigate('/')}
                             >
                                 Save Playlist
                             </Button>
@@ -64,6 +65,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                                 color="success"
                                 radius="lg"
                                 size="md"
+                                onPress={() => navigate('/')}
                             >
                                 See Top Artists
                             </Button>
@@ -90,6 +92,7 @@ export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
                                 color="success"
                                 radius="lg"
                                 size="md"
+                                onPress={() => navigate('/')}
                             >
                                 See Top Songs
                             </Button>

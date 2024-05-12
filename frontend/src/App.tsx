@@ -11,7 +11,7 @@ export interface UserInfo {
     name: string;
     lastname: string;
     isLoggedIn: boolean;
-    isRemembered: boolean;
+    shouldRemember: boolean;
 }
 
 function App() {
@@ -20,17 +20,17 @@ function App() {
         name: '',
         lastname: '',
         isLoggedIn: false,
-        isRemembered: false,
+        shouldRemember: false,
     });
 
     const handleLogout = () => {
-        userInfo.isRemembered ? localStorage.clear() : sessionStorage.clear(); // Clear storage if user is remembered
+        userInfo.shouldRemember ? localStorage.clear() : sessionStorage.clear(); // Clear storage wether it is local or session
         setUserInfo({
             ...userInfo,
             name: '',
             lastname: '',
             isLoggedIn: false,
-            isRemembered: false,
+            shouldRemember: false,
         }); // Delete user info
     };
 
@@ -44,7 +44,7 @@ function App() {
             name: name,
             lastname: lastname,
             isLoggedIn: true,
-            isRemembered: isRemembered,
+            shouldRemember: isRemembered,
         }); // Set user info
     };
 
@@ -55,7 +55,7 @@ function App() {
                 name: localStorage.getItem('name')!,
                 lastname: localStorage.getItem('lastname')!,
                 isLoggedIn: true,
-                isRemembered: true,
+                shouldRemember: true,
             }); // Set user info
             return;
         } else if (sessionStorage.length > 0 && !userInfo.isLoggedIn) {
@@ -64,7 +64,7 @@ function App() {
                 name: sessionStorage.getItem('name')!,
                 lastname: sessionStorage.getItem('lastname')!,
                 isLoggedIn: true,
-                isRemembered: false,
+                shouldRemember: false,
             }); // Set user info
             return;
         }
