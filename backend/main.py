@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from db.models import User, UserLoginRequest, UserSignUpRequest, UserLoginResponse
+from db.models import User, UserLoginRequest, UserSignUpRequest, UserBase
 from db.user import insert_user, get_user_by_email
 from security.security import get_password_hash, verify_password
 
@@ -19,7 +19,7 @@ app.add_middleware(
 
 
 @app.post("/api/login", status_code=status.HTTP_200_OK, tags=["User operations"])
-async def login(user_request: UserLoginRequest) -> UserLoginResponse:
+async def login(user_request: UserLoginRequest) -> UserBase:
     """Login route."""
     user = await get_user_by_email(user_request.email)
 
@@ -35,30 +35,31 @@ async def login(user_request: UserLoginRequest) -> UserLoginResponse:
             content={"message": "Invalid email / password."},
         )
 
-    return UserLoginResponse(name=user.name, lastname=user.lastname)
+    return UserBase(name=user.name, lastname=user.lastname)
 
 
 @app.post("/api/signup", status_code=status.HTTP_201_CREATED, tags=["User operations"])
 async def signup(user: UserSignUpRequest) -> JSONResponse:
     """Sign up a user."""
 
-    if get_user_by_email(user.email) == None:
+    if get_user_by_email(user.email) is None:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
             content={"message": "Email already in use, try to log in instead."},
         )
+    else:
+        hashed_password = get_password_hash(user.password)
 
-    hashed_password = get_password_hash(user.password)
+        user: User = User(
+            email=user.email,
+            hashed_password=hashed_password,
+            name=user.name,
+            lastname=user.lastname,
+            date_created=datetime.now(),
+        )
 
-    user: User = User(
-        email=user.email,
-        hashed_password=hashed_password,
-        name=user.name,
-        lastname=user.lastname,
-        date_created=datetime.now(),
-    )
+        await insert_user(user)
 
-    await insert_user(user)
-    return JSONResponse(
-        status_code=status.HTTP_201_CREATED, content={"message": "User created."}
-    )
+        return JSONResponse(
+            status_code=status.HTTP_201_CREATED, content={"message": "User created."}
+        )

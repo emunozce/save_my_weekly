@@ -5,14 +5,14 @@ from db.models import User
 from db.database_configs import engine
 
 
-async def insert_user(user: User):
+async def insert_user(user: User) -> None:
     """Insert a user."""
     with Session(engine) as session:
         session.add(user)
         session.commit()
 
 
-async def get_user_by_email(email: str):
+async def get_user_by_email(email: str) -> User | None:
     """Get a user by email."""
     with Session(engine) as session:
         user = session.get(User, email)

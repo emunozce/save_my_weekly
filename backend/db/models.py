@@ -37,10 +37,6 @@ class UserLoginRequest(SQLModel):
     password: str
 
 
-class UserLoginResponse(UserBase):
-    """User model. Used to return a user."""
-
-
 ##########################################################################
 
 
