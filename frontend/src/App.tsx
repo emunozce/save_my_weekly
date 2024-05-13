@@ -47,7 +47,8 @@ function App() {
      * last name of the user.
      * @param {boolean} isRemembered - The `isRemembered` parameter in the `handleLogin` function is a
      * boolean value that indicates whether the user wants to be remembered or not. If `isRemembered`
-     * is `true`, it means the user has chosen to be remembered for future logins, and if it is `false
+     * is `true`, it means the user has chosen to be remembered for future logins, and if it is `false`
+     * the user has chosen not to be remembered.
      */
     const handleLogin = (
         name: string,
