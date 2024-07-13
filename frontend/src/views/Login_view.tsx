@@ -1,4 +1,4 @@
-import Login_form from './Login_form';
+import Login_form from '../components/Login_form';
 
 export default function Login_page({
     handleLogin,
@@ -6,6 +6,7 @@ export default function Login_page({
     handleLogin: (
         name: string,
         lastname: string,
+        auth_token: string,
         isRemembered: boolean
     ) => void;
 }) {

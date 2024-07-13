@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 interface LoginData {
     email: string;
     password: string;
+    auth_token?: string;
 }
 
 interface ErrorData {
@@ -30,6 +31,7 @@ export default function Login_form({
     handleLogin: (
         name: string,
         lastname: string,
+        auth_token: string,
         isRemembered: boolean
     ) => void;
 }) {
@@ -51,18 +53,17 @@ export default function Login_form({
 
     const onSubmit = handleSubmit(async (data) => {
         setIsLoading(true);
-        const jsonUserData = JSON.stringify({
-            email: data.email,
-            password: data.password,
-        });
+        const formData = new FormData();
+        formData.append('username', data.email);
+        formData.append('password', data.password);
 
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_API_ENDPOINT}/login`,
-                jsonUserData,
+                formData,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 }
             );
@@ -70,15 +71,18 @@ export default function Login_form({
                 // If selected, save to local storage
                 localStorage.setItem('name', response.data.name);
                 localStorage.setItem('lastname', response.data.lastname);
+                localStorage.setItem('token', response.data.auth_token);
             } else {
                 // If not selected, save to session storage
                 sessionStorage.setItem('name', response.data.name);
                 sessionStorage.setItem('lastname', response.data.lastname);
+                sessionStorage.setItem('token', response.data.auth_token);
             }
 
             handleLogin(
                 response.data.name,
                 response.data.lastname,
+                response.data.auth_token,
                 isRememberLogInInfo
             ); // Set user info
 
