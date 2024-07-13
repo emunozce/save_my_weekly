@@ -15,7 +15,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from db.user import get_user_by_email
-from db.models import TokenData, User
+from db.models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -80,7 +80,7 @@ async def authenticate_user(username: str, password: str) -> User | None:
     return user
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     """Create access token"""
     to_encode = data.copy()
     if expires_delta:
@@ -95,20 +95,17 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+async def auth_check(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     """
-    The function `get_current_user` validates a user's token and returns the corresponding user if
-    valid.
+    The function `auth_check` is an asynchronous Python function that checks the validity of a token
+    using JWT decoding and raises an exception if the credentials are invalid.
 
-    :param token: The `token` parameter in the `get_current_user` function is expected
-    to be a string
-    representing the authentication token. This token is used to decode the payload and extract the
-    username for the current user. The function then retrieves the user information based on the
-    extracted username and returns the user object if found
+    :param token: The `token` parameter in the `auth_check` function is expected to be a string
+    representing the authentication token. This token is annotated with `Depends(oauth2_scheme)`,
+    indicating that it depends on the OAuth2 authentication scheme for validation
     :type token: Annotated[str, Depends(oauth2_scheme)]
-    :return: The `get_current_user` function is returning the user object retrieved by calling the
-    `get_user_by_email` function with the username extracted from the decoded JWT token data.
     """
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -122,10 +119,9 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         username: str | None = payload.get("sub")
         if not username:
             raise credentials_exception
-        token_data = TokenData(username=username)
     except InvalidTokenError as exc:
         raise credentials_exception from exc
-    user = get_user_by_email(token_data.username)
+    user = await get_user_by_email(username)
     if user is None:
         raise credentials_exception
     return user
