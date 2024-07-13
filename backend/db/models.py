@@ -1,6 +1,7 @@
 """SQLModel classes for the database tables."""
 
 from datetime import datetime
+from pydantic import BaseModel
 from sqlmodel import Field, SQLModel
 from db.database_configs import engine
 
@@ -30,11 +31,29 @@ class UserSignUpRequest(UserBase):
     password: str
 
 
-class UserLoginRequest(SQLModel):
+class UserLoginRequest(BaseModel):
     """User model. Used to login a user."""
 
     email: str
     password: str
+
+
+class UserLoginResponse(UserBase):
+    """User model. Used to login a user."""
+
+    auth_token: str | None = None
+
+
+########################################################################
+
+
+############################## Token Models ##########################################
+
+
+class TokenData(BaseModel):
+    """Token model."""
+
+    username: str | None = None
 
 
 ##########################################################################

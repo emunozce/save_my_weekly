@@ -4,12 +4,24 @@ Also contains the OAuth2PasswordBearer object used to authenticate users.
 JWT tokens are used to authenticate users.
 """
 
+import os
+from datetime import datetime, timedelta, timezone
+from typing import Annotated
+
+import jwt
+from dotenv import load_dotenv
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
+from db.user import get_user_by_email
+from db.models import TokenData, User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+load_dotenv()
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -44,3 +56,76 @@ def get_password_hash(password: str) -> str:
     using the `pwd_context.hash` function.
     """
     return pwd_context.hash(password)
+
+
+async def authenticate_user(username: str, password: str) -> User | None:
+    """
+    The function `authenticate_user` authenticates a user by checking their email and password.
+
+    :param username: The `username` parameter is a string that represents
+    the email address of the user
+    trying to authenticate
+    :type username: str
+    :param password: The `password` parameter in the `authenticate_user` function is a string that
+    represents the password input provided by the user for authentication
+    :type password: str
+    :return: If the user is successfully authenticated, the user object is being returned.
+    If the user is not found or the password verification fails, False is being returned.
+    """
+    user = await get_user_by_email(username)
+    if not user:
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    return user
+
+
+def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    """Create access token"""
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.now(timezone.utc) + expires_delta
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=1440)
+
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(
+        to_encode, os.getenv("SECRET_KEY"), algorithm=os.getenv("ALGORITHM")
+    )
+    return encoded_jwt
+
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    """
+    The function `get_current_user` validates a user's token and returns the corresponding user if
+    valid.
+
+    :param token: The `token` parameter in the `get_current_user` function is expected
+    to be a string
+    representing the authentication token. This token is used to decode the payload and extract the
+    username for the current user. The function then retrieves the user information based on the
+    extracted username and returns the user object if found
+    :type token: Annotated[str, Depends(oauth2_scheme)]
+    :return: The `get_current_user` function is returning the user object retrieved by calling the
+    `get_user_by_email` function with the username extracted from the decoded JWT token data.
+    """
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(
+            token, os.getenv("SECRET_KEY"), algorithms=[os.getenv("ALGORITHM")]
+        )
+        username: str | None = payload.get("sub")
+        if not username:
+            raise credentials_exception
+        token_data = TokenData(username=username)
+    except InvalidTokenError as exc:
+        raise credentials_exception from exc
+    user = get_user_by_email(token_data.username)
+    if user is None:
+        raise credentials_exception
+    return user

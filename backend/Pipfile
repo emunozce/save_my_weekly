@@ -8,8 +8,9 @@ fastapi = "*"
 sqlmodel = "*"
 python-dotenv = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
-passlib = {extras = ["bcrypt"], version = "*"}
+passlib = "*"
 bcrypt = "*"
+pyjwt = "*"
 
 [dev-packages]
 
