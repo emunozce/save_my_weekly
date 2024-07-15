@@ -17,8 +17,8 @@ import { UserInfo } from '../App';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavbarComponent({
-    userInfo: userInfo,
-    handleLogout: handleLogout,
+    userInfo,
+    handleLogout,
 }: {
     userInfo: UserInfo;
     handleLogout: () => void;

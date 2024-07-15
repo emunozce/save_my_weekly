@@ -19,6 +19,14 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
+class SpotifyToken(Token):
+    """Spotify token model."""
+
+    refresh_token: str
+    expires_in: int
+    scope: str
+
+
 ##########################################################################
 
 ############################## User Models ##########################################

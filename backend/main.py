@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from jwt import InvalidTokenError
 import requests as req
-from db.models import User, UserBase, UserSignUpRequest, Token
+from db.models import SpotifyToken, User, UserBase, UserSignUpRequest, Token
 from db.user import insert_user, get_user_by_email
 from security.security import (
     create_access_token,
@@ -127,14 +127,14 @@ async def read_spotify_url(
     return JSONResponse(status_code=status.HTTP_200_OK, content={"url": url})
 
 
-@app.post(
+@app.get(
     "/api/spotify/token",
     tags=["Spotify Operations"],
     summary="Get Spotify auth token",
     description="Receive the code to get the Spotify auth token.",
     dependencies=[Depends(oauth2_scheme)],
 )
-async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)],code: str) -> JSONResponse:
+async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)],code: str) -> SpotifyToken:
     """Get Spotify auth token."""
     try:
         _ = validate_token(token)
@@ -160,4 +160,10 @@ async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)],c
     response = req.post(os.getenv("SPOTIFY_TOKEN_URL"), data=data, headers=headers, timeout=10)
 
     print(response.json())
-    return JSONResponse(status_code=status.HTTP_200_OK, content={"auth_token": response.json()})
+    return SpotifyToken(
+        access_token=response.json().get("access_token"),
+        token_type=response.json().get("token_type"),
+        refresh_token=response.json().get("refresh_token"),
+        expires_in=response.json().get("expires_in"),
+        scope=response.json().get("scope"),
+    )

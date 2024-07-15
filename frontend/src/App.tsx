@@ -6,13 +6,22 @@ import Login_view from './views/Login_view';
 import Home_view from './views/Home_view';
 import Footer from './components/Footer';
 import { useState } from 'react';
+import Callback_page from './views/Callback_view';
 
 export interface UserInfo {
     name: string;
     lastname: string;
-    auth_token?: string;
     isLoggedIn: boolean;
     shouldRemember: boolean;
+    jwt: string;
+}
+
+export interface SpotifyToken {
+    access_token: string;
+    token_type: string;
+    refresh_token: string;
+    expires_in: number;
+    scope: string;
 }
 
 function App() {
@@ -20,9 +29,16 @@ function App() {
     const [userInfo, setUserInfo] = useState<UserInfo>({
         name: '',
         lastname: '',
-        auth_token: undefined,
         isLoggedIn: false,
         shouldRemember: false,
+        jwt: '',
+    });
+    const [spotifyToken, setSpotifyToken] = useState<SpotifyToken>({
+        access_token: '',
+        token_type: '',
+        refresh_token: '',
+        expires_in: 0,
+        scope: '',
     });
 
     /**
@@ -35,10 +51,17 @@ function App() {
             ...userInfo,
             name: '',
             lastname: '',
-            auth_token: undefined,
             isLoggedIn: false,
             shouldRemember: false,
+            jwt: '',
         }); // Delete user info
+        setSpotifyToken({
+            access_token: '',
+            token_type: '',
+            refresh_token: '',
+            expires_in: 0,
+            scope: '',
+        }); // Delete Spotify token
     };
 
     /**
@@ -56,8 +79,13 @@ function App() {
     const handleLogin = (
         name: string,
         lastname: string,
-        auth_token: string,
-        isRemembered: boolean
+        isRemembered: boolean,
+        jwt: string,
+        access_token: string,
+        token_type: string,
+        refresh_token: string,
+        expires_in: number,
+        scope: string
     ) => {
         setUserInfo({
             ...userInfo,
@@ -65,8 +93,15 @@ function App() {
             lastname: lastname,
             isLoggedIn: true,
             shouldRemember: isRemembered,
-            auth_token: auth_token,
+            jwt: jwt,
         }); // Set user info
+        setSpotifyToken({
+            access_token: access_token,
+            token_type: token_type,
+            refresh_token: refresh_token,
+            expires_in: expires_in,
+            scope: scope,
+        }); // Set Spotify token
     };
 
     /**
@@ -81,7 +116,7 @@ function App() {
                 ...userInfo,
                 name: localStorage.getItem('name')!,
                 lastname: localStorage.getItem('lastname')!,
-                auth_token: localStorage.getItem('auth_token')!,
+                jwt: localStorage.getItem('auth_token')!,
                 isLoggedIn: true,
                 shouldRemember: true,
             }); // Set user info
@@ -91,7 +126,7 @@ function App() {
                 ...userInfo,
                 name: sessionStorage.getItem('name')!,
                 lastname: sessionStorage.getItem('lastname')!,
-                auth_token: sessionStorage.getItem('auth_token')!,
+                jwt: sessionStorage.getItem('auth_token')!,
                 isLoggedIn: true,
                 shouldRemember: false,
             }); // Set user info
@@ -107,11 +142,17 @@ function App() {
             <Navbar userInfo={userInfo} handleLogout={handleLogout} />
             <Routes>
                 <Route path="/" element={<Home_view userInfo={userInfo} />} />
-                <Route
-                    path="/login"
-                    element={<Login_view handleLogin={handleLogin} />}
-                />
+                <Route path="/login" element={<Login_view />} />
                 <Route path="/signup" element={<Sign_up_view />} />
+                <Route
+                    path="/callback"
+                    element={
+                        <Callback_page
+                            handleLogin={handleLogin}
+                            handleLogout={handleLogout}
+                        />
+                    }
+                />
             </Routes>
             <Footer />
         </NextUIProvider>

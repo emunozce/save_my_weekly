@@ -22,19 +22,10 @@ interface LoginData {
 }
 
 interface ErrorData {
-    message: string;
+    detail: string;
 }
 
-export default function Login_form({
-    handleLogin,
-}: {
-    handleLogin: (
-        name: string,
-        lastname: string,
-        auth_token: string,
-        isRemembered: boolean
-    ) => void;
-}) {
+export default function Login_form() {
     const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const [isRememberLogInInfo, setRememberLogInInfo] =
@@ -56,9 +47,8 @@ export default function Login_form({
         const formData = new FormData();
         formData.append('username', data.email);
         formData.append('password', data.password);
-
         try {
-            const response = await axios.post(
+            const token = await axios.post(
                 `${import.meta.env.VITE_API_ENDPOINT}/login`,
                 formData,
                 {
@@ -67,32 +57,51 @@ export default function Login_form({
                     },
                 }
             );
+
+            const user_info = await axios.get(
+                `${import.meta.env.VITE_API_ENDPOINT}/users/me`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token.data.access_token}`,
+                    },
+                }
+            );
+
             if (isRememberLogInInfo) {
                 // If selected, save to local storage
-                localStorage.setItem('name', response.data.name);
-                localStorage.setItem('lastname', response.data.lastname);
-                localStorage.setItem('token', response.data.auth_token);
+                localStorage.setItem('name', user_info.data.name);
+                localStorage.setItem('lastname', user_info.data.lastname);
+                localStorage.setItem('auth_token', token.data.access_token);
             } else {
                 // If not selected, save to session storage
-                sessionStorage.setItem('name', response.data.name);
-                sessionStorage.setItem('lastname', response.data.lastname);
-                sessionStorage.setItem('token', response.data.auth_token);
+                sessionStorage.setItem('name', user_info.data.name);
+                sessionStorage.setItem('lastname', user_info.data.lastname);
+                sessionStorage.setItem('auth_token', token.data.access_token);
             }
 
-            handleLogin(
-                response.data.name,
-                response.data.lastname,
-                response.data.auth_token,
-                isRememberLogInInfo
-            ); // Set user info
+            // handleLogin(
+            //     user_info.data.name,
+            //     user_info.data.lastname,
+            //     isRememberLogInInfo,
+            //     token.data.access_token,
+            //     undefined
+            // ); // Set user info
 
             setIsLoading(false);
-            window.location.href = '/'; // Redirect to home page
+
+            const url = await axios.get(
+                `${import.meta.env.VITE_API_ENDPOINT}/spotify/user/auth`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token.data.access_token}`,
+                    },
+                }
+            );
+
+            window.location.href = url.data.url; // Redirect to home page
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 1000);
+                setIsLoading(false);
                 setIsInvalid(error?.response?.data);
             }
         }
@@ -115,7 +124,7 @@ export default function Login_form({
                         <CardBody>
                             {isInvalid && (
                                 <p className="text-red-600">
-                                    {isInvalid?.message}
+                                    {isInvalid?.detail}
                                 </p>
                             )}
                             <Spacer y={3} />
