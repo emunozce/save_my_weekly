@@ -155,11 +155,8 @@ async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)],c
         "Authorization": f"Basic {auth_base64}",
     }
 
-    print(headers)
-
     response = req.post(os.getenv("SPOTIFY_TOKEN_URL"), data=data, headers=headers, timeout=10)
 
-    print(response.json())
     return SpotifyToken(
         access_token=response.json().get("access_token"),
         token_type=response.json().get("token_type"),

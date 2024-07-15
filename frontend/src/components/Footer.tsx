@@ -3,7 +3,7 @@ import { Link } from '@nextui-org/react';
 export default function Footer() {
     return (
         <div className="relative sm:mt-72 md:mt-40 lg:mt-32">
-            <footer className="bg-green-500 grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-3 w-screen">
+            <footer className="bg-green-500 grid grid-cols-1 grid-rows-5 sm:grid-cols-2 sm:grid-rows-3 w-auto">
                 <h1 className="text-slate-800 row-start-1 sm:col-start-1 self-center justify-self-center font-extrabold text-xl">
                     Features
                 </h1>

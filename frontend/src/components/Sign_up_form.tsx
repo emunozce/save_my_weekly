@@ -88,7 +88,7 @@ export default function Sign_up_form() {
                         <Loader />
                     </div>
                 ) : (
-                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-24 sm:mt-20 sm:mb-0 md:mt-40 md:mb-10">
+                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-24 sm:mt-20 sm:mb-0 md:mt-24 md:mb-10">
                         <CardHeader>
                             <h4 className="text-3xl text-green-500 font-bold hover:cursor-default">
                                 Sign Up

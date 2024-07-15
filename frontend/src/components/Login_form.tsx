@@ -79,14 +79,6 @@ export default function Login_form() {
                 sessionStorage.setItem('auth_token', token.data.access_token);
             }
 
-            // handleLogin(
-            //     user_info.data.name,
-            //     user_info.data.lastname,
-            //     isRememberLogInInfo,
-            //     token.data.access_token,
-            //     undefined
-            // ); // Set user info
-
             setIsLoading(false);
 
             const url = await axios.get(
@@ -115,7 +107,7 @@ export default function Login_form() {
                         <Loader />
                     </div>
                 ) : (
-                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-32 sm:mb-0 md:mt-60 md:mb-24 lg:mb-4">
+                    <Card className="w-10/12 md:w-7/12 lg:w-5/12 my-32 sm:mb-0 md:mt-24 md:mb-24 lg:mb-24">
                         <CardHeader>
                             <h4 className="text-3xl text-green-500 font-bold hover:cursor-default">
                                 Login

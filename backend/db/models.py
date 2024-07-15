@@ -61,12 +61,6 @@ class UserLoginRequest(BaseModel):
     password: str
 
 
-class UserLoginResponse(UserBase):
-    """User model. Used to login a user."""
-
-    auth_token: Token | None = None
-
-
 ########################################################################
 
 

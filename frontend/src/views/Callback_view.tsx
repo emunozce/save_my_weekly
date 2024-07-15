@@ -59,6 +59,7 @@ export default function Callback_page({
                 );
 
                 let userInfo: User;
+
                 if (localStorage.length !== 0) {
                     // If selected, save to local storage
                     localStorage.setItem(
@@ -73,6 +74,8 @@ export default function Callback_page({
                         'expires_in',
                         response.data.expires_in
                     );
+                    localStorage.setItem('scope', response.data.scope);
+
                     userInfo = {
                         name: localStorage.getItem('name')!,
                         lastname: localStorage.getItem('lastname')!,
@@ -93,6 +96,8 @@ export default function Callback_page({
                         'expires_in',
                         response.data.expires_in
                     );
+                    sessionStorage.setItem('scope', response.data.scope);
+
                     userInfo = {
                         name: sessionStorage.getItem('name')!,
                         lastname: sessionStorage.getItem('lastname')!,

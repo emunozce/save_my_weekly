@@ -56,6 +56,7 @@ function App() {
             jwt: '',
         }); // Delete user info
         setSpotifyToken({
+            ...spotifyToken,
             access_token: '',
             token_type: '',
             refresh_token: '',
@@ -96,6 +97,7 @@ function App() {
             jwt: jwt,
         }); // Set user info
         setSpotifyToken({
+            ...spotifyToken,
             access_token: access_token,
             token_type: token_type,
             refresh_token: refresh_token,
@@ -120,6 +122,14 @@ function App() {
                 isLoggedIn: true,
                 shouldRemember: true,
             }); // Set user info
+            setSpotifyToken({
+                ...spotifyToken,
+                access_token: localStorage.getItem('access_token')!,
+                token_type: 'Bearer',
+                refresh_token: localStorage.getItem('refresh_token')!,
+                expires_in: parseInt(localStorage.getItem('expires_in')!),
+                scope: localStorage.getItem('scope')!,
+            }); // Set Spotify token
             return;
         } else if (sessionStorage.length > 0 && !userInfo.isLoggedIn) {
             setUserInfo({
@@ -130,6 +140,14 @@ function App() {
                 isLoggedIn: true,
                 shouldRemember: false,
             }); // Set user info
+            setSpotifyToken({
+                ...spotifyToken,
+                access_token: sessionStorage.getItem('access_token')!,
+                token_type: 'Bearer',
+                refresh_token: sessionStorage.getItem('refresh_token')!,
+                expires_in: parseInt(sessionStorage.getItem('expires_in')!),
+                scope: sessionStorage.getItem('scope')!,
+            }); // Set Spotify token
             return;
         }
         return;
