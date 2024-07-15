@@ -5,6 +5,21 @@ from pydantic import BaseModel
 from sqlmodel import Field, SQLModel
 from db.database_configs import engine
 
+############################## Token Models ##########################################
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    """Token model."""
+
+    username: str | None = None
+
+
+##########################################################################
 
 ############################## User Models ##########################################
 
@@ -41,22 +56,10 @@ class UserLoginRequest(BaseModel):
 class UserLoginResponse(UserBase):
     """User model. Used to login a user."""
 
-    auth_token: str | None = None
+    auth_token: Token | None = None
 
 
 ########################################################################
-
-
-############################## Token Models ##########################################
-
-
-class TokenData(BaseModel):
-    """Token model."""
-
-    username: str | None = None
-
-
-##########################################################################
 
 
 def create_db_and_tables():

@@ -12,16 +12,22 @@ import jwt
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jwt.exceptions import InvalidTokenError
+from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
 from passlib.context import CryptContext
 from db.user import get_user_by_email
-from db.models import User
+from db.models import TokenData, User, UserBase
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 load_dotenv()
+
+credentials_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Could not validate credentials",
+    headers={"WWW-Authenticate": "Bearer"},
+)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -95,33 +101,52 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
     return encoded_jwt
 
 
-async def auth_check(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+def validate_token(token: str) -> bool:
     """
-    The function `auth_check` is an asynchronous Python function that checks the validity of a token
-    using JWT decoding and raises an exception if the credentials are invalid.
+    This function validates the provided token by decoding it using JWT.
 
-    :param token: The `token` parameter in the `auth_check` function is expected to be a string
-    representing the authentication token. This token is annotated with `Depends(oauth2_scheme)`,
-    indicating that it depends on the OAuth2 authentication scheme for validation
-    :type token: Annotated[str, Depends(oauth2_scheme)]
+    :param token: The `token` parameter is a string representing the JWT token to be validated.
+    :type token: str
+    :return: The function `validate_token` returns a boolean value indicating whether the token is
+    valid or not.
     """
-
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
 
     try:
-        payload = jwt.decode(
+        return jwt.decode(
             token, os.getenv("SECRET_KEY"), algorithms=[os.getenv("ALGORITHM")]
         )
-        username: str | None = payload.get("sub")
-        if not username:
-            raise credentials_exception
+    except ExpiredSignatureError as exc:
+        raise credentials_exception from exc
     except InvalidTokenError as exc:
         raise credentials_exception from exc
-    user = await get_user_by_email(username)
+
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> UserBase:
+    """
+    This function retrieves the current user based on the provided token and validates the user's
+    credentials using JWT decoding.
+
+    :param token: The `token` parameter is of type `str`
+    and is annotated with `Depends(oauth2_scheme)`.
+    This indicates that the `token` is expected to be a string representing an OAuth2
+    token used for authentication
+    :type token: Annotated[str, Depends(oauth2_scheme)]
+    :return: The function `get_current_user` is returning a `UserBase` object.
+    """
+    try:
+        payload = validate_token(token)
+    except InvalidTokenError as exc:
+        raise credentials_exception from exc
+
+    username: str | None = payload.get("sub")
+
+    if not username:
+        raise credentials_exception
+
+    token_data = TokenData(username=username)
+
+    user: UserBase | None = await get_user_by_email(token_data.username)
+
     if user is None:
         raise credentials_exception
     return user
