@@ -129,7 +129,7 @@ export default function Callback_page({
     window.onload = get_query_params;
 
     return (
-        <div>
+        <div className="my-72">
             <Loader />
         </div>
     );

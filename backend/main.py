@@ -12,8 +12,8 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from jwt import InvalidTokenError
 import requests as req
-from db.models import SpotifyToken, User, UserBase, UserSignUpRequest, Token
-from db.user import insert_user, get_user_by_email
+from data.models import SpotifyToken, User, UserBase, UserSignUpRequest, Token
+from data.user import insert_user, get_user_by_email
 from security.security import (
     create_access_token,
     get_password_hash,
@@ -31,6 +31,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=True,
 )
 
 

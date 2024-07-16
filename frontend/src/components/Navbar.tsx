@@ -15,7 +15,6 @@ import {
 } from '@nextui-org/react';
 import { UserInfo } from '../App';
 import { useNavigate } from 'react-router-dom';
-
 export default function NavbarComponent({
     userInfo,
     handleLogout,

@@ -3,7 +3,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 from sqlmodel import Field, SQLModel
-from db.database_configs import engine
+from data.database_configs import engine
 
 ############################## Token Models ##########################################
 
