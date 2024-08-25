@@ -26,7 +26,7 @@ interface ErrorData {
 }
 
 export default function LoginForm() {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const [isRememberLogInInfo, setRememberLogInInfo] =
         useState<boolean>(false);
