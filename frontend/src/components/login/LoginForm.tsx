@@ -10,7 +10,7 @@ import {
     Spacer,
     Checkbox,
 } from '@nextui-org/react';
-import Loader from './Loader';
+import Loader from '../Loader';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ interface ErrorData {
     detail: string;
 }
 
-export default function Login_form() {
+export default function LoginForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [isInvalid, setIsInvalid] = useState<ErrorData | null>(null);
     const [isRememberLogInInfo, setRememberLogInInfo] =
