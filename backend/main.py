@@ -69,7 +69,7 @@ async def login(user_request: Annotated[OAuth2PasswordRequestForm, Depends()]) -
 async def signup(user: UserSignUpRequest) -> JSONResponse:
     """Sign up a user."""
 
-    if get_user_by_email(user.email) is None:
+    if await get_user_by_email(user.email):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail="User already exists."
         )
