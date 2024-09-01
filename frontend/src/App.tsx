@@ -5,7 +5,7 @@ import Sign_up_view from './views/SignUpView';
 import Login_view from './views/LoginView';
 import Home_view from './views/HomeView';
 import Footer from './components/Footer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Callback_page from './views/CallbackView';
 
 export interface UserInfo {
@@ -153,7 +153,10 @@ function App() {
         return;
     };
 
-    isRemembered(); // Check if there is user data in storage at first web page start up
+    // Check if there is user data in storage at first web page start up
+    useEffect(() => {
+        isRemembered();
+    }, []);
 
     return (
         <NextUIProvider navigate={navigate}>
