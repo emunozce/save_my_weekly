@@ -91,7 +91,7 @@ async def signup(user: UserSignUpRequest) -> JSONResponse:
     )
 
 
-@app.get("/api/users/me/", tags=["User Operations"], summary="Read users data")
+@app.get("/api/users/me", tags=["User Operations"], summary="Read users data")
 async def read_users_me(
     current_user: Annotated[UserBase, Depends(get_current_user)],
 ) -> UserBase:

@@ -27,7 +27,6 @@ export default function Callback_page({
     handleLogout: () => void;
 }) {
     const navigate = useNavigate();
-    // let first_time = true;
 
     const get_query_params = async () => {
         const query_params = new URLSearchParams(window.location.search);
