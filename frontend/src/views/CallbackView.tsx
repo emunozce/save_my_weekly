@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import axios from 'axios';
+import { useUserContext } from '../services/UserContext';
 
 export interface User {
     name: string;
@@ -9,24 +10,9 @@ export interface User {
     jwt: string;
 }
 
-export default function Callback_page({
-    handleLogin,
-    handleLogout,
-}: {
-    handleLogin: (
-        name: string,
-        lastname: string,
-        isRemembered: boolean,
-        jwt: string,
-        access_token: string,
-        token_type: string,
-        refresh_token: string,
-        expires_in: number,
-        scope: string
-    ) => void;
-    handleLogout: () => void;
-}) {
+export default function Callback_page() {
     const navigate = useNavigate();
+    const { handleLogin, handleLogout } = useUserContext();
 
     const get_query_params = async () => {
         const query_params = new URLSearchParams(window.location.search);

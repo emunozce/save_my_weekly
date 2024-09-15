@@ -8,11 +8,12 @@ import {
     Image,
     Link,
 } from '@nextui-org/react';
-import { UserInfo } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../services/UserContext';
 
-export default function Home_Page({ userInfo }: { userInfo: UserInfo }) {
+export default function Home_Page() {
     const navigate = useNavigate();
+    const { userInfo } = useUserContext();
 
     return (
         <>

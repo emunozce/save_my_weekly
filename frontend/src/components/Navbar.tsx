@@ -13,17 +13,12 @@ import {
     ModalHeader,
     Tooltip,
 } from '@nextui-org/react';
-import { UserInfo } from '../App';
 import { useNavigate } from 'react-router-dom';
-export default function NavbarComponent({
-    userInfo,
-    handleLogout,
-}: {
-    userInfo: UserInfo;
-    handleLogout: () => void;
-}) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+import { useUserContext } from '../services/UserContext';
+export default function NavbarComponent() {
     const navigate = useNavigate();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { userInfo, handleLogout } = useUserContext();
 
     return (
         <Navbar
