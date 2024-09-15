@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import axios from 'axios';
 import { useUserContext } from '../services/UserContext';
+import { useEffect } from 'react';
 
 export interface User {
     name: string;
@@ -13,6 +14,10 @@ export interface User {
 export default function Callback_page() {
     const navigate = useNavigate();
     const { handleLogin, handleLogout } = useUserContext();
+
+    useEffect(() => {
+        get_query_params();
+    }, []);
 
     const get_query_params = async () => {
         const query_params = new URLSearchParams(window.location.search);
@@ -110,8 +115,6 @@ export default function Callback_page() {
         }
         navigate('/');
     };
-
-    window.onload = get_query_params;
 
     return (
         <div className="my-72">
