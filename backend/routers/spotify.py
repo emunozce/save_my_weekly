@@ -93,7 +93,6 @@ async def get_spotify_top_tracks(
     token: Annotated[str, Depends(oauth2_scheme)],
     spotify_token: str,
     timespan: str) -> JSONResponse:
-    print(timespan)
     """Get Spotify top tracks."""
     try:
         _ = validate_token(token)
@@ -108,6 +107,34 @@ async def get_spotify_top_tracks(
                 headers=headers,
                 timeout=10)
 
+
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=response.json()
+    )
+
+@router.get(
+    "/top/artists",
+    summary="Get Spotify top artists",
+    description="Receive the Spotify auth token to get the top artists.",
+)
+async def get_spotify_top_artists(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    spotify_token: str,
+    timespan: str) -> JSONResponse:
+    """Get Spotify top artists."""
+    try:
+        _ = validate_token(token)
+    except InvalidTokenError as exc:
+        raise credentials_exception from exc
+
+    headers = {
+        "Authorization": f"Bearer {spotify_token}",
+    }
+
+    response = req.get(f"{os.getenv("API_BASE_URL")}me/top/artists?time_range={timespan}&limit=20",
+                headers=headers,
+                timeout=10)
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,

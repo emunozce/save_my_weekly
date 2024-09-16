@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useUserContext } from '../services/UserContext';
 import {
     Card,
     CardBody,
@@ -8,37 +11,73 @@ import {
     Select,
     Selection,
     SelectItem,
-    Spacer,
 } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
-import { useUserContext } from '../services/UserContext';
-import axios from 'axios';
 
-interface SpotifyArtist {
+interface SpotifyTrack {
+    album: {
+        album_type: string;
+        artists: Array<{
+            external_urls: {
+                spotify: string;
+            };
+            href: string;
+            id: string;
+            name: string;
+            type: string;
+            uri: string;
+        }>;
+        available_markets: string[];
+        external_urls: {
+            spotify: string;
+        };
+        href: string;
+        id: string;
+        images: Array<{
+            height: number;
+            url: string;
+            width: number;
+        }>;
+        name: string;
+        release_date: string;
+        release_date_precision: string;
+        total_tracks: number;
+        type: string;
+        uri: string;
+    };
+    artists: Array<{
+        external_urls: {
+            spotify: string;
+        };
+        href: string;
+        id: string;
+        name: string;
+        type: string;
+        uri: string;
+    }>;
+    available_markets: string[];
+    disc_number: number;
+    duration_ms: number;
+    explicit: boolean;
+    external_ids: {
+        isrc: string;
+    };
     external_urls: {
         spotify: string;
     };
-    followers: {
-        href: string | null;
-        total: number;
-    };
-    genres: string[];
     href: string;
     id: string;
-    images: Array<{
-        height: number;
-        url: string;
-        width: number;
-    }>;
+    is_local: boolean;
     name: string;
     popularity: number;
+    preview_url: string | null;
+    track_number: number;
     type: string;
     uri: string;
 }
 
-export default function TopArtistsView() {
+export default function TopTracksView() {
     const { userInfo, spotifyToken } = useUserContext();
-    const [artistsList, setArtistsList] = useState<SpotifyArtist[]>([]);
+    const [tracksList, setTracksList] = useState<SpotifyTrack[]>([]);
     const [periodSelected, setPeriodSelected] = useState<Selection>(
         new Set(['short_term'])
     );
@@ -55,7 +94,7 @@ export default function TopArtistsView() {
                 const response = await axios.get(
                     `${
                         import.meta.env.VITE_API_ENDPOINT
-                    }/spotify/top/artists?spotify_token=${
+                    }/spotify/top/tracks?spotify_token=${
                         spotifyToken.access_token
                     }&timespan=${Array.from(periodSelected).join(',')}`,
                     {
@@ -64,7 +103,7 @@ export default function TopArtistsView() {
                         },
                     }
                 );
-                setArtistsList(response.data.items);
+                setTracksList(response.data.items);
             } catch (error) {
                 console.error(error);
             }
@@ -88,56 +127,31 @@ export default function TopArtistsView() {
             </Select>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
-                {artistsList.map((artist: SpotifyArtist) => (
+                {tracksList.map((track: SpotifyTrack) => (
                     <Card
-                        key={artist.id}
-                        className="max-w-[300px] mx-auto lg:mx-2 my-4"
+                        key={track.id}
+                        className="max-w-[300px] mx-auto  my-4"
                     >
                         <CardHeader>
                             <Image
                                 isZoomed
-                                alt={artist.name}
+                                alt={track.album.name}
                                 className="object-cover"
-                                src={artist.images[1].url}
+                                src={track.album.images[0].url}
                             />
                         </CardHeader>
                         <CardBody>
-                            <p className="text-2xl font-semibold">
-                                {artist.name}
+                            <p className="text-lg font-semibold">
+                                {track.name}
                             </p>
-                            <Spacer y={5} />
-                            <div className="flex flex-row">
-                                <p className="text-lg font-semibold">
-                                    Followers
-                                </p>
-                                <Spacer x={2} />
-                                <p className="text-lg text-gray-500">
-                                    {artist.followers.total.toLocaleString()}
-                                </p>
-                            </div>
-                            <Spacer y={5} />
-                            <div className="flex flex-row">
-                                <p className="text-lg font-semibold">
-                                    Popularity
-                                </p>
-                                <Spacer x={2} />
-                                <p className="text-lg text-gray-500">
-                                    {artist.popularity}
-                                </p>
-                            </div>
-                            <Spacer y={5} />
-                            <div className="flex flex-col">
-                                <p className="text-lg font-semibold">Genres</p>
-                                <Spacer x={2} />
-                                <p className="text-lg text-gray-500">
-                                    {artist.genres.join(', ')}
-                                </p>
-                            </div>
+                            <p className="text-sm text-gray-500">
+                                {track.artists[0].name}
+                            </p>
                         </CardBody>
                         <CardFooter>
                             <div className="flex flex-row items-center justify-center">
                                 <Link
-                                    href={artist.external_urls.spotify}
+                                    href={track.external_urls.spotify}
                                     isExternal
                                     showAnchorIcon
                                     className="text-green-500"

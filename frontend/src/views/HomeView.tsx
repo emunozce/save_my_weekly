@@ -58,7 +58,7 @@ export default function Home_Page() {
                                 color="success"
                                 radius="lg"
                                 size="md"
-                                onPress={() => navigate('/')}
+                                onPress={() => navigate('/artists')}
                             >
                                 See Top Artists
                             </Button>
