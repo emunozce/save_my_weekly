@@ -1,27 +1,20 @@
 """FastAPI application entry point."""
 
-import base64
 from datetime import datetime, timedelta
-import os
 from typing import Annotated
-import urllib.parse
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
-from jwt import InvalidTokenError
-import requests as req
-from data.models import SpotifyToken, User, UserBase, UserSignUpRequest, Token
+from routers import spotify
+from data.models import User, UserBase, UserSignUpRequest, Token
 from data.user import insert_user, get_user_by_email
 from security.security import (
     create_access_token,
     get_password_hash,
     authenticate_user,
     get_current_user,
-    validate_token,
-    oauth2_scheme,
-    credentials_exception,
 )
 
 app = FastAPI()
@@ -33,6 +26,8 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True,
 )
+
+app.include_router(spotify.router)
 
 
 @app.post(
@@ -97,71 +92,3 @@ async def read_users_me(
 ) -> UserBase:
     """Return the current user."""
     return current_user
-
-
-@app.get(
-    "/api/spotify/user/auth",
-    tags=["Spotify Operations"],
-    summary="Get Spotify user auth url",
-)
-async def read_spotify_url(
-    token: Annotated[str, Depends(oauth2_scheme)]
-) -> JSONResponse:
-    """Redirect to url to get the auth token."""
-    try:
-        _ = validate_token(token)
-    except InvalidTokenError as exc:
-        raise credentials_exception from exc
-
-    scopes = "playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-top-read"
-
-    query_params = {
-        "client_id": os.getenv("CLIENT_ID"),
-        "response_type": "code",
-        "redirect_uri": os.getenv("REDIRECT_URI"),
-        "scope": scopes,
-        "show_dialog": "true",
-    }
-
-    url = f"{os.getenv("SPOTIFY_AUTH_URL")}?{urllib.parse.urlencode(query_params)}"
-
-    return JSONResponse(status_code=status.HTTP_200_OK, content={"url": url})
-
-
-@app.get(
-    "/api/spotify/token",
-    tags=["Spotify Operations"],
-    summary="Get Spotify auth token",
-    description="Receive the code to get the Spotify auth token.",
-    dependencies=[Depends(oauth2_scheme)],
-)
-async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)],code: str) -> SpotifyToken:
-    """Get Spotify auth token."""
-    try:
-        _ = validate_token(token)
-    except InvalidTokenError as exc:
-        raise credentials_exception from exc
-
-    data = {
-        "grant_type": "authorization_code",
-        "code": code,
-        "redirect_uri": os.getenv("REDIRECT_URI"),
-    }
-
-    auth_string = f"{os.getenv('CLIENT_ID')}:{os.getenv('CLIENT_SECRET')}"
-    auth_base64 = base64.b64encode(auth_string.encode()).decode()
-
-    headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": f"Basic {auth_base64}",
-    }
-
-    response = req.post(os.getenv("SPOTIFY_TOKEN_URL"), data=data, headers=headers, timeout=10)
-
-    return SpotifyToken(
-        access_token=response.json().get("access_token"),
-        token_type=response.json().get("token_type"),
-        refresh_token=response.json().get("refresh_token"),
-        expires_in=response.json().get("expires_in"),
-        scope=response.json().get("scope"),
-    )

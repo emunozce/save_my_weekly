@@ -85,7 +85,7 @@ export default function Home_Page() {
                                 color="success"
                                 radius="lg"
                                 size="md"
-                                onPress={() => navigate('/')}
+                                onPress={() => navigate('/tracks')}
                             >
                                 See Top Songs
                             </Button>
