@@ -12,6 +12,7 @@ import {
     Selection,
     SelectItem,
 } from '@nextui-org/react';
+import NotAuthView from './NotAuthView';
 
 interface SpotifyTrack {
     album: {
@@ -91,6 +92,7 @@ export default function TopTracksView() {
     useEffect(() => {
         const fetchTracks = async () => {
             try {
+                if (!userInfo.isLoggedIn) return;
                 const response = await axios.get(
                     `${
                         import.meta.env.VITE_API_ENDPOINT
@@ -109,60 +111,66 @@ export default function TopTracksView() {
             }
         };
         fetchTracks();
-    }, [spotifyToken.access_token, userInfo.jwt, periodSelected]);
+    }, [periodSelected]);
 
     return (
         <>
-            <Select
-                label="Period"
-                placeholder="Select a period"
-                className="max-w-sm m-5"
-                color="success"
-                selectedKeys={periodSelected}
-                onSelectionChange={setPeriodSelected}
-            >
-                {time.map((item) => (
-                    <SelectItem key={item.key}>{item.label}</SelectItem>
-                ))}
-            </Select>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
-                {tracksList.map((track: SpotifyTrack) => (
-                    <Card
-                        key={track.id}
-                        className="max-w-[300px] mx-auto  my-4"
+            {userInfo.isLoggedIn ? (
+                <>
+                    <Select
+                        label="Period"
+                        placeholder="Select a period"
+                        className="max-w-sm m-5"
+                        color="success"
+                        selectedKeys={periodSelected}
+                        onSelectionChange={setPeriodSelected}
                     >
-                        <CardHeader>
-                            <Image
-                                isZoomed
-                                alt={track.album.name}
-                                className="object-cover"
-                                src={track.album.images[0].url}
-                            />
-                        </CardHeader>
-                        <CardBody>
-                            <p className="text-lg font-semibold">
-                                {track.name}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                {track.artists[0].name}
-                            </p>
-                        </CardBody>
-                        <CardFooter>
-                            <div className="flex flex-row items-center justify-center">
-                                <Link
-                                    href={track.external_urls.spotify}
-                                    isExternal
-                                    showAnchorIcon
-                                    className="text-green-500"
-                                >
-                                    Open in Spotify
-                                </Link>
-                            </div>
-                        </CardFooter>
-                    </Card>
-                ))}
-            </div>
+                        {time.map((item) => (
+                            <SelectItem key={item.key}>{item.label}</SelectItem>
+                        ))}
+                    </Select>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
+                        {tracksList.map((track: SpotifyTrack) => (
+                            <Card
+                                key={track.id}
+                                className="max-w-[300px] mx-auto  my-4"
+                            >
+                                <CardHeader>
+                                    <Image
+                                        isZoomed
+                                        alt={track.album.name}
+                                        className="object-cover"
+                                        src={track.album.images[0].url}
+                                    />
+                                </CardHeader>
+                                <CardBody>
+                                    <p className="text-lg font-semibold">
+                                        {track.name}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        {track.artists[0].name}
+                                    </p>
+                                </CardBody>
+                                <CardFooter>
+                                    <div className="flex flex-row items-center justify-center">
+                                        <Link
+                                            href={track.external_urls.spotify}
+                                            isExternal
+                                            showAnchorIcon
+                                            className="text-green-500"
+                                        >
+                                            Open in Spotify
+                                        </Link>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <NotAuthView />
+            )}
         </>
     );
 }
