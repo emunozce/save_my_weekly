@@ -59,16 +59,36 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     }, []);
 
     /**
-     * The `handleLogin` function in TypeScript React sets user information including name, lastname,
-     * login status, and remember preference.
+     * The `handleLogin` function sets user information and Spotify token based on the provided
+     * parameters.
      * @param {string} name - The `name` parameter is a string representing the user's first name.
-     * @param {string} lastname - The `lastname` parameter in the `handleLogin` function represents the
-     * last name of the user who is logging in. It is a string type parameter that should contain the
-     * last name of the user.
+     * @param {string} lastname - The `lastname` parameter in the `handleLogin` function is a string
+     * representing the last name of the user who is logging in.
      * @param {boolean} isRemembered - The `isRemembered` parameter in the `handleLogin` function is a
-     * boolean value that indicates whether the user wants to be remembered or not. If `isRemembered`
-     * is `true`, it means the user has chosen to be remembered for future logins, and if it is `false`
-     * the user has chosen not to be remembered.
+     * boolean value that indicates whether the user has chosen to be remembered or not during the
+     * login process. If `isRemembered` is `true`, it typically means that the user has selected an
+     * option like "Remember Me"
+     * @param {string} jwt - JWT (JSON Web Token) is a compact, URL-safe means of representing claims
+     * to be transferred between two parties. It is commonly used for authentication and information
+     * exchange in web development.
+     * @param {string} access_token - An access token is a credential used to access protected
+     * resources on behalf of a user. It is typically obtained after a user authenticates and
+     * authorizes access to their data.
+     * @param {string} token_type - The `token_type` parameter in the `handleLogin` function is a
+     * string that represents the type of token being used for authentication. It is commonly used in
+     * OAuth 2.0 authentication flows to specify the type of token being issued, such as "Bearer" for
+     * access tokens.
+     * @param {string} refresh_token - The `refresh_token` parameter in the `handleLogin` function is
+     * used to store the refresh token received during the authentication process. This token can be
+     * used to obtain a new access token without requiring the user to log in again. It is commonly
+     * used in OAuth2 authentication flows to maintain user sessions and
+     * @param {number} expires_in - The `expires_in` parameter in the `handleLogin` function represents
+     * the time in seconds for which the access token is valid before it expires. This value is
+     * typically provided by the authentication server when issuing the access token and indicates how
+     * long the token can be used to access protected resources before it needs to
+     * @param {string} scope - The `scope` parameter in the `handleLogin` function represents the scope
+     * of the access permissions granted by the user during the authentication process. It specifies
+     * what actions the application is allowed to perform on behalf of the user.
      */
     const handleLogin = (
         name: string,
@@ -99,6 +119,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }); // Set Spotify token
     };
 
+    /**
+     * The `handleLogout` function clears user information and Spotify token, updating the state
+     * accordingly.
+     */
     const handleLogout = () => {
         userInfo.shouldRemember ? localStorage.clear() : sessionStorage.clear(); // Clear storage wether it is local or session
         setUserInfo({
@@ -121,9 +145,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
     /**
      * The function `isRemembered` checks if there is stored user information in localStorage or
-     * sessionStorage and updates the user info accordingly.
-     * @returns The `isRemembered` function returns nothing (`undefined`) if none of the conditions
-     * inside the function are met.
+     * sessionStorage and updates the user and Spotify token accordingly.
+     * @returns The `isRemembered` function returns nothing (`undefined`) if none of the conditions are
+     * met. If the conditions are met, the function sets the user info and Spotify token based on the
+     * stored data in `localStorage` or `sessionStorage` and then returns nothing.
      */
     const isRemembered = () => {
         if (localStorage.length > 0 && !userInfo.isLoggedIn) {
@@ -181,6 +206,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     );
 };
 
+/**
+ * The useUserContext function is used to access the UserContext within a UserProvider in a TypeScript
+ * React application.
+ * @returns The `useUserContext` custom hook is being returned. This hook is designed to be used within
+ * a `UserProvider` component to access the user context. It uses the `useContext` hook from React to
+ * retrieve the context and throws an error if it is used outside of a `UserProvider`.
+ */
 export const useUserContext = () => {
     const context = useContext(UserContext);
     if (context === undefined) {
