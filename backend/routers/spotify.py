@@ -203,6 +203,9 @@ async def save_spotify_weekly_playlist(
                 json={"name": name, "public": public, "collaborative": collaborative, "description": description},
                 timeout=10)
 
+    playlist_url = response.json().get("external_urls").get("spotify")
+
+
     new_playlist_id = response.json().get("id")
 
     response =  req.post(f"{os.getenv("API_BASE_URL")}playlists/{new_playlist_id}/tracks",
@@ -210,10 +213,8 @@ async def save_spotify_weekly_playlist(
                 json={"uris": [track.get("track").get("uri") for track in tracks_data]},
                 timeout=10)
 
-    print(response.json())
-
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content={"message": "Weekly playlist saved."}
+        content={"url": playlist_url}
     )
