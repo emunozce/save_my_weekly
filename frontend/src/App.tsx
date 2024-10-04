@@ -10,6 +10,7 @@ import { UserProvider } from './services/UserContext';
 import NotFoundView from './views/NotFoundView';
 import TopTracksView from './views/TopTracksView';
 import TopArtistsView from './views/TopArtistsView';
+import DiscoverWeekly from './views/DiscoverWeekly';
 
 function App() {
     const navigate = useNavigate();
@@ -23,6 +24,10 @@ function App() {
                     <Route path="/login" element={<Login_view />} />
                     <Route path="/signup" element={<Sign_up_view />} />
                     <Route path="/callback" element={<Callback_page />} />
+                    <Route
+                        path="/save_my_weekly"
+                        element={<DiscoverWeekly />}
+                    />
                     <Route path="/tracks" element={<TopTracksView />} />
                     <Route path="/artists" element={<TopArtistsView />} />
                     <Route path="*" element={<NotFoundView />} />

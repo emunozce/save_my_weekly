@@ -7,6 +7,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
+import uvicorn
 from routers import spotify
 from data.models import User, UserBase, UserSignUpRequest, Token
 from data.user import insert_user, get_user_by_email
@@ -92,3 +93,7 @@ async def read_users_me(
 ) -> UserBase:
     """Return the current user."""
     return current_user
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -32,7 +32,7 @@ export default function Home_Page() {
                                 color="success"
                                 radius="lg"
                                 size="md"
-                                onPress={() => navigate('/')}
+                                onPress={() => navigate('/save_my_weekly')}
                             >
                                 Save Playlist
                             </Button>
