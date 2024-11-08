@@ -1,6 +1,6 @@
 .env
 *.db
-Pipfile.lock
+Pipfile*
 
 # Logs
 logs
