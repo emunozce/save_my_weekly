@@ -124,7 +124,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
      * accordingly.
      */
     const handleLogout = () => {
-        userInfo.shouldRemember ? localStorage.clear() : sessionStorage.clear(); // Clear storage wether it is local or session
+        userInfo.shouldRemember
+            ? clear_storage('local')
+            : clear_storage('session'); // Clear storage wether it is local or session
         setUserInfo({
             ...userInfo,
             name: '',
@@ -143,6 +145,27 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         }); // Delete Spotify token
     };
 
+    const clear_storage = (targetStorage: string) => {
+        if (targetStorage === 'local') {
+            localStorage.removeItem('sv_my_wkly_auth_token');
+            localStorage.removeItem('name');
+            localStorage.removeItem('lastname');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('expires_in');
+            localStorage.removeItem('scope');
+        }
+        if (targetStorage === 'session') {
+            sessionStorage.removeItem('sv_my_wkly_auth_token');
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('lastname');
+            sessionStorage.removeItem('access_token');
+            sessionStorage.removeItem('refresh_token');
+            sessionStorage.removeItem('expires_in');
+            sessionStorage.removeItem('scope');
+        }
+    };
+
     /**
      * The function `isRemembered` checks if there is stored user information in localStorage or
      * sessionStorage and updates the user and Spotify token accordingly.
@@ -151,12 +174,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
      * stored data in `localStorage` or `sessionStorage` and then returns nothing.
      */
     const isRemembered = () => {
-        if (localStorage.length > 0 && !userInfo.isLoggedIn) {
+        if (
+            localStorage.getItem('sv_my_wkly_auth_token') &&
+            !userInfo.isLoggedIn
+        ) {
             setUserInfo({
                 ...userInfo,
                 name: localStorage.getItem('name')!,
                 lastname: localStorage.getItem('lastname')!,
-                jwt: localStorage.getItem('auth_token')!,
+                jwt: localStorage.getItem('sv_my_wkly_auth_token')!,
                 isLoggedIn: true,
                 shouldRemember: true,
             }); // Set user info
@@ -169,12 +195,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 scope: localStorage.getItem('scope')!,
             }); // Set Spotify token
             return;
-        } else if (sessionStorage.length > 0 && !userInfo.isLoggedIn) {
+        } else if (
+            sessionStorage.getItem('sv_my_wkly_auth_token') &&
+            !userInfo.isLoggedIn
+        ) {
             setUserInfo({
                 ...userInfo,
                 name: sessionStorage.getItem('name')!,
                 lastname: sessionStorage.getItem('lastname')!,
-                jwt: sessionStorage.getItem('auth_token')!,
+                jwt: sessionStorage.getItem('sv_my_wkly_auth_token')!,
                 isLoggedIn: true,
                 shouldRemember: false,
             }); // Set user info

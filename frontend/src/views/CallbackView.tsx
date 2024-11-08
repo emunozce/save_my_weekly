@@ -31,9 +31,9 @@ export default function Callback_page() {
             try {
                 let jwt: string;
                 if (localStorage.length !== 0) {
-                    jwt = localStorage.getItem('auth_token')!;
+                    jwt = localStorage.getItem('sv_my_wkly_auth_token')!;
                 } else {
-                    jwt = sessionStorage.getItem('auth_token')!;
+                    jwt = sessionStorage.getItem('sv_my_wkly_auth_token')!;
                 }
 
                 const response = await axios.get(
@@ -70,7 +70,7 @@ export default function Callback_page() {
                         name: localStorage.getItem('name')!,
                         lastname: localStorage.getItem('lastname')!,
                         shouldRemember: true,
-                        jwt: localStorage.getItem('auth_token')!,
+                        jwt: localStorage.getItem('sv_my_wkly_auth_token')!,
                     };
                 } else {
                     // If not selected, save to session storage
@@ -92,7 +92,7 @@ export default function Callback_page() {
                         name: sessionStorage.getItem('name')!,
                         lastname: sessionStorage.getItem('lastname')!,
                         shouldRemember: false,
-                        jwt: sessionStorage.getItem('auth_token')!,
+                        jwt: sessionStorage.getItem('sv_my_wkly_auth_token')!,
                     };
                 }
 

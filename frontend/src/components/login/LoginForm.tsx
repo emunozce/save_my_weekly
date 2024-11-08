@@ -76,12 +76,18 @@ export default function LoginForm() {
                 // If selected, save to local storage
                 localStorage.setItem('name', user_info.data.name);
                 localStorage.setItem('lastname', user_info.data.lastname);
-                localStorage.setItem('auth_token', token.data.access_token);
+                localStorage.setItem(
+                    'sv_my_wkly_auth_token',
+                    token.data.access_token
+                );
             } else {
                 // If not selected, save to session storage
                 sessionStorage.setItem('name', user_info.data.name);
                 sessionStorage.setItem('lastname', user_info.data.lastname);
-                sessionStorage.setItem('auth_token', token.data.access_token);
+                sessionStorage.setItem(
+                    'sv_my_wkly_auth_token',
+                    token.data.access_token
+                );
             }
 
             setIsLoading(false);
