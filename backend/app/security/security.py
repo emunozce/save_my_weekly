@@ -14,8 +14,8 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
 from passlib.context import CryptContext
-from data.user import get_user_by_email
-from data.models import TokenData, User, UserBase
+from app.data.user import get_user_by_email
+from app.data.models import TokenData, User, UserBase
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
 

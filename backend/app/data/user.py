@@ -1,8 +1,8 @@
 """Table USer setup file."""
 
 from sqlmodel import Session
-from data.models import User
-from data.database_configs import engine
+from app.data.models import User
+from app.data.database_configs import engine
 
 
 async def insert_user(user: User) -> None:

@@ -8,10 +8,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 import uvicorn
-from routers import spotify
-from data.models import User, UserBase, UserSignUpRequest, Token
-from data.user import insert_user, get_user_by_email
-from security.security import (
+from app.routers import spotify
+from app.data.models import User, UserBase, UserSignUpRequest, Token
+from app.data.user import insert_user, get_user_by_email
+from app.security.security import (
     create_access_token,
     get_password_hash,
     authenticate_user,

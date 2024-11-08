@@ -2,7 +2,6 @@
 
 import base64
 from datetime import datetime, timedelta
-import json
 import os
 import urllib.parse
 from typing import Annotated
@@ -11,8 +10,8 @@ from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from jwt import InvalidTokenError
 import requests as req
-from security.security import oauth2_scheme, validate_token, credentials_exception
-from data.models import SpotifyToken
+from app.security.security import oauth2_scheme, validate_token, credentials_exception
+from app.data.models import SpotifyToken
 
 router = APIRouter(
     prefix="/api/spotify",
@@ -55,7 +54,9 @@ async def read_spotify_url(
     summary="Get Spotify auth token",
     description="Receive the code to get the Spotify auth token.",
 )
-async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)], code: str) -> SpotifyToken:
+async def get_spotify_auth_token(
+    token: Annotated[str, Depends(oauth2_scheme)], code: str
+) -> SpotifyToken:
     """Get Spotify auth token."""
     try:
         _ = validate_token(token)
@@ -76,7 +77,9 @@ async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)], 
         "Authorization": f"Basic {auth_base64}",
     }
 
-    response = req.post(os.getenv("SPOTIFY_TOKEN_URL"), data=data, headers=headers, timeout=10)
+    response = req.post(
+        os.getenv("SPOTIFY_TOKEN_URL"), data=data, headers=headers, timeout=10
+    )
 
     return SpotifyToken(
         access_token=response.json().get("access_token"),
@@ -86,15 +89,15 @@ async def get_spotify_auth_token(token: Annotated[str, Depends(oauth2_scheme)], 
         scope=response.json().get("scope"),
     )
 
+
 @router.get(
     "/top/tracks",
     summary="Get Spotify top tracks",
     description="Receive the Spotify auth token to get the top tracks.",
 )
 async def get_spotify_top_tracks(
-    token: Annotated[str, Depends(oauth2_scheme)],
-    spotify_token: str,
-    timespan: str) -> JSONResponse:
+    token: Annotated[str, Depends(oauth2_scheme)], spotify_token: str, timespan: str
+) -> JSONResponse:
     """Get Spotify top tracks."""
     try:
         _ = validate_token(token)
@@ -105,15 +108,14 @@ async def get_spotify_top_tracks(
         "Authorization": f"Bearer {spotify_token}",
     }
 
-    response = req.get(f"{os.getenv("API_BASE_URL")}me/top/tracks?time_range={timespan}&limit=20",
-                headers=headers,
-                timeout=10)
-
-
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content=response.json()
+    response = req.get(
+        f"{os.getenv("API_BASE_URL")}me/top/tracks?time_range={timespan}&limit=20",
+        headers=headers,
+        timeout=10,
     )
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=response.json())
+
 
 @router.get(
     "/top/artists",
@@ -121,9 +123,8 @@ async def get_spotify_top_tracks(
     description="Receive the Spotify auth token to get the top artists.",
 )
 async def get_spotify_top_artists(
-    token: Annotated[str, Depends(oauth2_scheme)],
-    spotify_token: str,
-    timespan: str) -> JSONResponse:
+    token: Annotated[str, Depends(oauth2_scheme)], spotify_token: str, timespan: str
+) -> JSONResponse:
     """Get Spotify top artists."""
     try:
         _ = validate_token(token)
@@ -134,23 +135,23 @@ async def get_spotify_top_artists(
         "Authorization": f"Bearer {spotify_token}",
     }
 
-    response = req.get(f"{os.getenv("API_BASE_URL")}me/top/artists?time_range={timespan}&limit=20",
-                headers=headers,
-                timeout=10)
-
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content=response.json()
+    response = req.get(
+        f"{os.getenv("API_BASE_URL")}me/top/artists?time_range={timespan}&limit=20",
+        headers=headers,
+        timeout=10,
     )
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=response.json())
+
 
 @router.get(
     "/save/weekly-playlist",
     summary="Save Spotify weekly playlist",
-    description="Receive the Spotify auth token to save the weekly playlist."
+    description="Receive the Spotify auth token to save the weekly playlist.",
 )
 async def save_spotify_weekly_playlist(
-    token: Annotated[str, Depends(oauth2_scheme)],
-    spotify_token: str) -> JSONResponse:
+    token: Annotated[str, Depends(oauth2_scheme)], spotify_token: str
+) -> JSONResponse:
     """Save Spotify weekly playlist."""
     try:
         _ = validate_token(token)
@@ -161,23 +162,29 @@ async def save_spotify_weekly_playlist(
         "Authorization": f"Bearer {spotify_token}",
     }
 
-    response = req.get(f"{os.getenv("API_BASE_URL")}me",
-                headers=headers,
-                timeout=10)
+    response = req.get(f"{os.getenv("API_BASE_URL")}me", headers=headers, timeout=10)
 
     user_id = response.json().get("id")
 
-    response = req.get(f"{os.getenv("API_BASE_URL")}users/{user_id}/playlists?limit=50",
-                headers=headers,
-                timeout=10)
+    response = req.get(
+        f"{os.getenv("API_BASE_URL")}users/{user_id}/playlists?limit=50",
+        headers=headers,
+        timeout=10,
+    )
 
     playlists_data = response.json().get("items")
 
-    playlist_id:list = [playlist.get("id") for playlist in playlists_data if playlist.get("name") == "Discover Weekly"]
+    playlist_id: list = [
+        playlist.get("id")
+        for playlist in playlists_data
+        if playlist.get("name") == "Discover Weekly"
+    ]
 
-    response = req.get(f"{os.getenv("API_BASE_URL")}playlists/{playlist_id[0]}/tracks",
-                headers=headers,
-                timeout=10)
+    response = req.get(
+        f"{os.getenv("API_BASE_URL")}playlists/{playlist_id[0]}/tracks",
+        headers=headers,
+        timeout=10,
+    )
 
     tracks_data = response.json().get("items")
 
@@ -198,23 +205,27 @@ async def save_spotify_weekly_playlist(
     collaborative = False
     description = "Weekly playlist generated by Save My Weekly. Enjoy!"
 
-    response =  req.post(f"{os.getenv("API_BASE_URL")}users/{user_id}/playlists",
-                headers=headers,
-                json={"name": name, "public": public, "collaborative": collaborative, "description": description},
-                timeout=10)
+    response = req.post(
+        f"{os.getenv("API_BASE_URL")}users/{user_id}/playlists",
+        headers=headers,
+        json={
+            "name": name,
+            "public": public,
+            "collaborative": collaborative,
+            "description": description,
+        },
+        timeout=10,
+    )
 
     playlist_url = response.json().get("external_urls").get("spotify")
 
-
     new_playlist_id = response.json().get("id")
 
-    response =  req.post(f"{os.getenv("API_BASE_URL")}playlists/{new_playlist_id}/tracks",
-                headers=headers,
-                json={"uris": [track.get("track").get("uri") for track in tracks_data]},
-                timeout=10)
-
-
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"url": playlist_url}
+    response = req.post(
+        f"{os.getenv("API_BASE_URL")}playlists/{new_playlist_id}/tracks",
+        headers=headers,
+        json={"uris": [track.get("track").get("uri") for track in tracks_data]},
+        timeout=10,
     )
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content={"url": playlist_url})

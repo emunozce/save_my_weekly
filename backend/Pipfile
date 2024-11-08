@@ -4,14 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-
-[dev-packages]
 fastapi = "==0.111.0"
 pyjwt = "==2.8.0"
 sqlmodel = "==0.0.19"
 python-dotenv = "==1.0.1"
 passlib = {extras = ["bcrypt"], version = "==1.7.4"}
 requests = "==2.32.3"
+
+[dev-packages]
 
 [requires]
 python_version = "3.12"
